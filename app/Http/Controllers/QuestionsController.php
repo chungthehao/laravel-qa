@@ -42,7 +42,7 @@ class QuestionsController extends Controller
      */
     public function create()
     {
-        $question = new Question();
+        $question = new Question(); // Chỉ để có thể dùng chung _form.blade.php với edit
 
         return view('questions.create', compact('question'));
     }
@@ -78,9 +78,9 @@ class QuestionsController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function edit(Question $question)
+    public function edit(Question $question) // Route Model Binding
     {
-        //
+        return view('questions.edit', compact('question'));
     }
 
     /**
@@ -90,9 +90,11 @@ class QuestionsController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(AskQuestionRequest $request, Question $question)
     {
-        //
+        $question->update($request->only('title', 'body'));
+
+        return redirect()->route('questions.index')->with('success', 'Your question has been modified.');
     }
 
     /**
