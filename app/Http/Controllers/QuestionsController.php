@@ -14,7 +14,22 @@ class QuestionsController extends Controller
      */
     public function index()
     {
-        $questions = Question::latest()->paginate(5);
+        # Xem cách mà laravel thực hiện câu truy vấn khi mình gọi:
+        # Question::latest()->paginate(5);
+        # và $question->user->url, name ở view
+        # cho thấy vấn đề truy vấn N+1 (lazy loading), và giải pháp
+        # eager loading.
+        /*\DB::enableQueryLog();
+
+        $questions = Question::with('user')->latest()->paginate(5);
+
+        view('questions.index', compact('questions'))->render();
+
+        dd(\DB::getQueryLog());*/
+
+        //-----------------------------------------------------
+
+        $questions = Question::with('user')->latest()->paginate(5);
 
         return view('questions.index', compact('questions'));
     }
@@ -48,7 +63,7 @@ class QuestionsController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        return 123;
     }
 
     /**

@@ -30,4 +30,11 @@ class User extends Authenticatable
     public function questions() {
         return $this->hasMany(Question::class);
     }
+
+    // Khi đâu đó lấy thuộc tính url của đối tượng user
+    // thì sẽ trả về link tới màn hình show của user đó
+    public function getUrlAttribute() {
+        //return route("users.show", $this->id);
+        return '#';
+    }
 }
