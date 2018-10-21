@@ -25,6 +25,15 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        # Khi sử dụng Gate để xác thực trong các actions, chỉ cần cung cấp
+        // đối tượng $question, không cần truyền đối tượng $user, laravel
+        // tự làm việc đó cho mình (behind the scene).
+        Gate::define('update-question', function($user, $question) {
+            return $user->id === $question->user_id;
+        });
+
+        Gate::define('delete-question', function($user, $question) {
+            return $user->id === $question->user_id;
+        });
     }
 }
