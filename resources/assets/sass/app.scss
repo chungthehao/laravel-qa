@@ -12,3 +12,33 @@
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
+
+.counters {
+  font-size: 0.75rem;
+
+  strong {
+    display: block;
+    font-size: 2em; // 0.75rem x 2 (its parent (.counters) 0.75rem)
+  }
+
+  .vote, .answer {
+    width: 3.75rem;
+    height: 3.75rem;
+  }
+
+  .status {
+    &.unanswered { // class="status unanswered" phải cùng lúc 2 cái
+      border: none;
+    }
+
+    &.answered {
+      border: 1px solid $color-green;
+      color: $color-green;
+    }
+
+    &.answered-accepted {
+      background: $green;
+      color: $color-white;
+    }
+  }
+}
