@@ -69,7 +69,14 @@ class QuestionsController extends Controller
      */
     public function show(Question $question)
     {
-        return 123;
+        /* Cập nhật lượt views */
+        # Cách 1
+        // $question->views = $question->views + 1;
+        // $question->save();
+        # Cách 2
+        $question->increment('views');
+
+        return view('questions.show', compact('question'));
     }
 
     /**
