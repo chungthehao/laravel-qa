@@ -9,7 +9,11 @@ class Question extends Model
     protected $fillable = ['title', 'body'];
 
     public function user() {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function answers() {
+        return $this->hasMany(Answer::class, 'question_id', 'id');
     }
 
     public function setTitleAttribute($value) {
@@ -31,7 +35,7 @@ class Question extends Model
     }
 
     public function getStatusAttribute() {
-        if ($this->answers == 0) {
+        if ($this->answers_count == 0) {
             return 'unanswered';
         }
         if ($this->best_answer_id) {
