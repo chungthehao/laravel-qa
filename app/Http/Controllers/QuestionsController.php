@@ -8,6 +8,13 @@ use App\Http\Requests\AskQuestionRequest;
 
 class QuestionsController extends Controller
 {
+    public function __construct() {
+        // Phải đăng nhập mới vào được các actions trong controller này
+        // ngoại trừ 2 actions: index, show
+        // Nếu chưa đăng nhập vô link các actions cấm -> redirect tới login page
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -87,6 +94,10 @@ class QuestionsController extends Controller
      */
     public function edit(Question $question) // Route Model Binding
     {
+        // Dựa vào những gì định nghĩa trong QuestionPolicy.php
+        // Không cần truyền đối tượng $user, vì laravel tự xử lý.
+        $this->authorize('update', $question);
+
         return view('questions.edit', compact('question'));
     }
 
@@ -99,6 +110,10 @@ class QuestionsController extends Controller
      */
     public function update(AskQuestionRequest $request, Question $question)
     {
+        // Dựa vào những gì định nghĩa trong QuestionPolicy.php
+        // Không cần truyền đối tượng $user, vì laravel tự xử lý.
+        $this->authorize('update', $question);
+
         $question->update($request->only('title', 'body'));
 
         return redirect()->route('questions.index')->with('success', 'Your question has been modified.');
@@ -112,6 +127,10 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
+        // Dựa vào những gì định nghĩa trong QuestionPolicy.php
+        // Không cần truyền đối tượng $user, vì laravel tự xử lý.
+        $this->authorize('delete', $question);
+
         $question->delete();
 
         return redirect()->route('questions.index')->with('success', 'Your question has been removed.');
