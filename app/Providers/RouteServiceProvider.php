@@ -31,7 +31,11 @@ class RouteServiceProvider extends ServiceProvider
             // return $question ? $question : abort(404);
 
             /* Cách 2 */
-            return Question::where('slug', $slug)->first() ?? abort(404);
+            return Question::with('answers.user')->where('slug', $slug)->first() ?? abort(404);
+            # Eager loading (solve N+1 query problem)
+            // with('answers.user') có ý nghĩa là
+            // answers : relation trong Question model
+            // user : relation trong Answer model
         });
 
         parent::boot();

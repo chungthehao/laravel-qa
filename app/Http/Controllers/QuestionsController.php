@@ -81,7 +81,7 @@ class QuestionsController extends Controller
         // $question->views = $question->views + 1;
         // $question->save();
         # Cách 2
-        $question->increment('views');
+        $question->increment('views'); // tự save rồi
 
         return view('questions.show', compact('question'));
     }
