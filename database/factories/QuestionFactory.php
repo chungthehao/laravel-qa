@@ -11,7 +11,9 @@ $factory->define(App\Question::class, function (Faker $faker) {
 
         'views' => rand(0, 10),
 
-        'answers_count' => rand(0, 10),
+        # Không phản ánh đúng số lượng answer thực tế
+        # Đã dùng eloquent event để cập nhật cx, trong Answer Model
+        // 'answers_count' => rand(0, 10),
 
         'votes' => rand(-3, 10),
     ];
