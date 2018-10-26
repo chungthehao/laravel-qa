@@ -27,6 +27,10 @@ class Answer extends Model
         return $this->created_at->diffForHumans();
     }
 
+    public function getStatusAttribute() {
+        return $this->id === $this->question->best_answer_id ? 'vote-accepted' : '';
+    }
+
     public static function boot() {
         // Kế thừa, giữ lại method cha
         parent::boot();
@@ -66,7 +70,16 @@ class Answer extends Model
         // $a->save()
 
         static::deleted(function ($answer) { // define an argument to represent the answer instant
-            $answer->question->decrement('answers_count');
+            $question = $answer->question;
+
+            // Xóa 1 answer thì giảm answers_count ở bảng questions đi 1
+            $question->decrement('answers_count');
+
+            // Nếu answer bị xóa là best answer thì cập nhật lại
+            if ($question->best_answer_id === $answer->id) {
+                $question->best_answer_id = null;
+                $question->save();
+            }
         });
 
     }
