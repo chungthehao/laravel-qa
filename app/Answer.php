@@ -64,5 +64,10 @@ class Answer extends Model
         // $a->votes_count = 8
         # B4: Save lại
         // $a->save()
+
+        static::deleted(function ($answer) { // define an argument to represent the answer instant
+            $answer->question->decrement('answers_count');
+        });
+
     }
 }

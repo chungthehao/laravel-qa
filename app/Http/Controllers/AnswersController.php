@@ -77,8 +77,16 @@ class AnswersController extends Controller
      * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
+    # Tham số thứ 1: Question $question, không cần dùng đến
+    // vẫn để
+    // theo cái route thôi, xem lại bằng cách chạy
+    // php artisan route:list --name=questions.answers.destroy
     public function destroy(Question $question, Answer $answer)
     {
-        return 123;
+        $this->authorize('delete', $answer);
+
+        $answer->delete();
+
+        return back()->with('success', 'Your answer has been removed!');
     }
 }
