@@ -75,11 +75,14 @@ class Answer extends Model
             // Xóa 1 answer thì giảm answers_count ở bảng questions đi 1
             $question->decrement('answers_count');
 
-            // Nếu answer bị xóa là best answer thì cập nhật lại
-            if ($question->best_answer_id === $answer->id) {
-                $question->best_answer_id = null;
-                $question->save();
-            }
+            /* Nếu answer bị xóa là best answer thì cập nhật lại */
+            # Cách 1
+//            if ($question->best_answer_id === $answer->id) {
+//                $question->best_answer_id = null;
+//                $question->save();
+//            }
+            # Cách 2
+            // Dùng best_answer_id làm khóa ngoại (xem file migration bổ sung)
         });
 
     }
