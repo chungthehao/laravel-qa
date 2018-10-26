@@ -16,7 +16,11 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
-        Question::class => QuestionPolicy::class
+
+        // Cách 1: phải import namespace của 2 lớp
+        Question::class => QuestionPolicy::class,
+        // Cách 2: Khỏi import namespace
+        'App\Answer' => 'App\Policies\AnswerPolicy',
     ];
 
     /**
