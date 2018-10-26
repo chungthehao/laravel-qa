@@ -16,6 +16,7 @@ class AnswersController extends Controller
      */
     public function store(Question $question, Request $request)
     {
+        // Bỏ vô trong create luôn
         /*$request->validate([
             'body' =>'required'
         ]);*/
@@ -24,10 +25,10 @@ class AnswersController extends Controller
             $request->validate([
                 'body' =>'required'
             ])
-//            ,
+//            , // Dùng toán tử + luôn
             +
             [
-//                'body'      => $request->body,
+//                'body'      => $request->body, // Dùng cách mới thì bỏ cái này (ở trên có rồi)
                 'user_id'   => \Auth::id()
             ]
         );
