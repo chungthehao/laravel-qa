@@ -35,6 +35,11 @@ class User extends Authenticatable
         return $this->hasMany(Answer::class, 'user_id', 'id');
     }
 
+    public function favorites() {
+        return $this->belongsToMany(Question::class, 'favorites', 'user_id', 'question_id')
+                    ->withTimestamps(); // Khi attach, se co luon created_at va updated_at
+    }
+
     // Khi đâu đó lấy thuộc tính url của đối tượng user
     // thì sẽ trả về link tới màn hình show của user đó
     public function getUrlAttribute() {
