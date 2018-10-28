@@ -38,6 +38,11 @@ class Question extends Model
         $this->attributes['slug'] = str_slug($value);
     }
 
+    # Cách làm sạch dữ liệu body trước khi lưu vào database
+//    public function setBodyAttribute($value) {
+//        $this->attributes['body'] = clean($value);
+//    }
+
     # Định nghĩa Accessor
     // Khi đâu đó lấy thuộc tính url của đối tượng question
     // thì sẽ trả về link tới màn hình show của question đó
@@ -62,7 +67,9 @@ class Question extends Model
     }
 
     public function getBodyHtmlAttribute() {
-        return \Parsedown::instance()->text($this->body);
+        // Làm sạch dữ liệu body trước khi render ra view
+        // (dù cho ở database nó ko sạch)
+        return clean($this->bodyHtml());
     }
 
     public function getIsFavoritedAttribute() {
@@ -71,6 +78,18 @@ class Question extends Model
 
     public function getFavoritesCountAttribute() {
         return $this->favorites->count();
+    }
+
+    public function getExcerptAttribute() {
+        return $this->excerpt(250);
+    }
+
+    public function excerpt($length) {
+        return str_limit(strip_tags($this->bodyHtml()), $length);
+    }
+
+    private function bodyHtml() {
+        return \Parsedown::instance()->text($this->body);
     }
 
 }
