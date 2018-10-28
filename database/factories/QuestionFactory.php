@@ -15,6 +15,8 @@ $factory->define(App\Question::class, function (Faker $faker) {
         # Đã dùng eloquent event để cập nhật cx, trong Answer Model
         // 'answers_count' => rand(0, 10),
 
-        'votes' => rand(-3, 10),
+        # Khong chinh xac
+        # Da duoc dem 1 cach chinh xac o voteTheQuestion() trong User model
+        // 'votes_count' => rand(-3, 10),
     ];
 });

@@ -19,6 +19,16 @@ class Answer extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function votes() {
+        return $this->morphToMany(
+            User::class,
+            'votable'
+            # De luc goi $a1->votes (<=> $a1->votes()->get())
+            // thi co luon 'created_at', 'updated_at', 'vote'
+            // ma ko can phai $a1->votes()->withPivot('vote')->get() de lay them cot 'vote'
+        )->withTimestamps()->withPivot('vote');
+    }
+
     public function getBodyHtmlAttribute() {
         return \Parsedown::instance()->text($this->body);
     }

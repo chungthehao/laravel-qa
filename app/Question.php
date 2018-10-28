@@ -21,6 +21,13 @@ class Question extends Model
                     ->withTimestamps(); // Khi attach, se co luon created_at va updated_at
     }
 
+    public function votes() {
+        return $this->morphToMany(
+            User::class,
+            'votable'
+        )->withTimestamps()->withPivot('vote');
+    }
+
     public function isFavorited() {
         // Lay id cua user dang login: auth()->id()
         return $this->favorites()->where('user_id', auth()->id())->count() > 0;
@@ -29,6 +36,14 @@ class Question extends Model
     public function acceptBestAnswer(Answer $answer) {
         $this->best_answer_id = $answer->id;
         $this->save();
+    }
+
+    public function upVotes() {
+        return $this->votes()->wherePivot('vote', 1);
+    }
+
+    public function downVotes() {
+        return $this->votes()->wherePivot('vote', -1);
     }
 
     public function setTitleAttribute($value) {
