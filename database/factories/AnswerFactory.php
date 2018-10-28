@@ -12,6 +12,8 @@ $factory->define(App\Answer::class, function (Faker $faker) {
         # Cách khác: array_random(App\User::pluck('id')->all())
         'user_id' => App\User::pluck('id')->random(),
 
-        'votes_count' => rand(0, 5),
+        # Tạo ở đây ko chính xác
+        // Đã tạo chính xác ở file VotablesTableSeeder
+        //'votes_count' => rand(0, 5),
     ];
 });

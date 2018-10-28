@@ -29,6 +29,14 @@ class Answer extends Model
         )->withTimestamps()->withPivot('vote');
     }
 
+    public function upVotes() {
+        return $this->votes()->wherePivot('vote', 1);
+    }
+
+    public function downVotes() {
+        return $this->votes()->wherePivot('vote', -1);
+    }
+
     public function getBodyHtmlAttribute() {
         return \Parsedown::instance()->text($this->body);
     }

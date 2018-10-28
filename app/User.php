@@ -83,6 +83,26 @@ class User extends Authenticatable
         $question->votes_count = $downVotes + $upVotes;
         $question->save();
     }
+    
+    public function voteTheAnswer(Answer $answer, $vote) {
+        $voteAnswers = $this->voteAnswers();
+
+        # Tao / Cap nhat vao bang pivot
+        if ($voteAnswers->where('votable_id', $answer->id)->exists()) {
+            $voteAnswers->updateExistingPivot($answer->id, ['vote' => $vote]);
+        } else {
+            $voteAnswers->attach($answer->id, ['vote' => $vote]);
+        }
+
+        /* Cap nhat so vote (votes_count trong bang answers) */
+        $answer->load('votes'); // refresh the relationship
+
+        $downVotes = (int) $answer->downVotes()->sum('vote');
+        $upVotes = (int) $answer->upVotes()->sum('vote');
+
+        $answer->votes_count = $downVotes + $upVotes;
+        $answer->save();
+    }
 
     // Khi đâu đó lấy thuộc tính url của đối tượng user
     // thì sẽ trả về link tới màn hình show của user đó
