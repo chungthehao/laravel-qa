@@ -26,12 +26,21 @@ class RouteServiceProvider extends ServiceProvider
     {
         # Define custom route model bindings
         Route::bind('slug', function($slug) {
-            /* Cách 1 */
+            /* Cách 1: cách cơ bản */
             // $question = Question::where('slug', $slug)->first();
             // return $question ? $question : abort(404);
 
-            /* Cách 2 */
+            /* Cách 2 (để giải quyết vấn đề N+1 query) */
+            //return Question::with('answers.user')->where('slug', $slug)->first() ?? abort(404);
+
+            # Cách 1 để sắp xếp answer nhiều vote xếp trước
+//            return Question::with(['answers.user', 'answers' => function ($query) {
+//                    $query->orderBy('votes_count', 'desc');
+//                }])->where('slug', $slug)->first() ?? abort(404);
+
+            # Cách 2 để sắp xếp answer nhiều vote xếp trước, để như dưới, rồi thêm thắt trong Question model
             return Question::with('answers.user')->where('slug', $slug)->first() ?? abort(404);
+
             # Eager loading (solve N+1 query problem)
             // with('answers.user') có ý nghĩa là
             // answers : relation trong Question model

@@ -15,7 +15,11 @@ class Question extends Model
     }
 
     public function answers() {
-        return $this->hasMany(Answer::class, 'question_id', 'id');
+        return $this->hasMany(Answer::class, 'question_id', 'id')
+                    ->orderBy('votes_count', 'desc');
+        # Chú thích cho cách 2 ở RouteServiceProvider.php
+        // BẤT CỨ KHI NÀO gọi $question->answers, kết quả trả về các answer record sẽ sắp
+        // xếp theo thứ tự votes_count giảm dần.
     }
 
     public function favorites() {

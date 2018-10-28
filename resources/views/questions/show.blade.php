@@ -40,10 +40,12 @@
             </div>
         </div>
 
-        @include('answers._index', array(
-            'answers_count' => $question->answers_count,
-            'answers' => $question->answers,
-        ))
+        @if($question->answers_count)
+            @include('answers._index', array(
+                'answers_count' => $question->answers_count,
+                'answers' => $question->answers,
+            ))
+        @endif
 
         @include('answers._create', [
             'question' => $question

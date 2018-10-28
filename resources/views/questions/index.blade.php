@@ -17,7 +17,7 @@
                     <div class="card-body">
                         @include('layouts._messages')
 
-                        @foreach($questions as $question)
+                        @forelse($questions as $question)
                             <div class="media">
                                 <div class="d-flex flex-column counters mr-5 text-center">
                                     <div class="vote">
@@ -58,7 +58,11 @@
                             </div>
 
                             <hr>
-                        @endforeach
+                        @empty
+                            <div class="alert alert-warning text-center">
+                                <strong>Sorry!</strong> There are no questions available.
+                            </div>
+                        @endforelse
 
                         {{ $questions->links() }}
 
