@@ -57,51 +57,31 @@ class User extends Authenticatable
     public function voteTheQuestion(Question $question, $vote) {
         $voteQuestions = $this->voteQuestions();
 
-        # Tao / Cap nhat vao bang pivot
-        if ($voteQuestions->where('votable_id', $question->id)->exists()) {
-            $voteQuestions->updateExistingPivot($question->id, ['vote' => $vote]);
-        } else {
-            $voteQuestions->attach($question->id, ['vote' => $vote]);
-        }
-
-        /* Cap nhat so vote (votes_count trong bang questions) */
-        # Cach 1: Chi dung khi bang questions votes_count=0
-        // Tuc la du lieu ban dau phai chinh xac thi cach nay moi dung, vi
-        // no dua tren du lieu cu, roi tang hoac giam di 1
-//        $question->votes_count = $question->votes_count + $vote;
-//        $question->save();
-
-        # Cach 2: Luon dung
-        // Do luc nao cung truy van kiem tra trong bang pivot roi cap nhat lai
-        // vao bang questions, chu khong dua vao gia tri cu cua votes_count trong
-        // bang questions
-        $question->load('votes'); // refresh the relationship
-
-        $downVotes = (int) $question->downVotes()->sum('vote');
-        $upVotes = (int) $question->upVotes()->sum('vote');
-
-        $question->votes_count = $downVotes + $upVotes;
-        $question->save();
+        $this->_vote($voteQuestions, $question, $vote);
     }
     
     public function voteTheAnswer(Answer $answer, $vote) {
         $voteAnswers = $this->voteAnswers();
 
+        $this->_vote($voteAnswers, $answer, $vote);
+    }
+    
+    private function _vote($relationship, $model, $vote) {
         # Tao / Cap nhat vao bang pivot
-        if ($voteAnswers->where('votable_id', $answer->id)->exists()) {
-            $voteAnswers->updateExistingPivot($answer->id, ['vote' => $vote]);
+        if ($relationship->where('votable_id', $model->id)->exists()) {
+            $relationship->updateExistingPivot($model->id, ['vote' => $vote]);
         } else {
-            $voteAnswers->attach($answer->id, ['vote' => $vote]);
+            $relationship->attach($model->id, ['vote' => $vote]);
         }
 
-        /* Cap nhat so vote (votes_count trong bang answers) */
-        $answer->load('votes'); // refresh the relationship
+        /* Cap nhat so vote (votes_count trong bang questions/answers/?,...) */
+        $model->load('votes'); // refresh the relationship
 
-        $downVotes = (int) $answer->downVotes()->sum('vote');
-        $upVotes = (int) $answer->upVotes()->sum('vote');
+        $downVotes = (int) $model->downVotes()->sum('vote');
+        $upVotes = (int) $model->upVotes()->sum('vote');
 
-        $answer->votes_count = $downVotes + $upVotes;
-        $answer->save();
+        $model->votes_count = $downVotes + $upVotes;
+        $model->save();
     }
 
     // Khi đâu đó lấy thuộc tính url của đối tượng user
