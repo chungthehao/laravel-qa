@@ -18,6 +18,8 @@ class User extends Authenticatable
         'name', 'email', 'password',
     ];
 
+    protected $appends = ['avatar', 'url']; // Để khi có model là có luôn các accessor
+
     /**
      * The attributes that should be hidden for arrays.
      *

@@ -39,7 +39,8 @@ class RouteServiceProvider extends ServiceProvider
 //                }])->where('slug', $slug)->first() ?? abort(404);
 
             # Cách 2 để sắp xếp answer nhiều vote xếp trước, để như dưới, rồi thêm thắt trong Question model
-            return Question::with('answers.user')->where('slug', $slug)->first() ?? abort(404);
+            return Question::with(['answers.user', 'user'])->where('slug', $slug)->first() ?? abort(404);
+            //--------------user của các answers | user của question
 
             # Eager loading (solve N+1 query problem)
             // with('answers.user') có ý nghĩa là
