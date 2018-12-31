@@ -24,7 +24,7 @@
 
             update() {
                 axios
-                    .patch(`/questions/${this.questionId}/answers/${this.id}`, {
+                    .patch(this.endpoint, {
                         body: this.body
                     })
                     .then(res => {
@@ -38,11 +38,27 @@
                         console.log(err.response);
                         alert(err.response.data.message);
                     });
+            },
+
+            destroy() {
+                if (confirm('Are you sure?')) {
+                    axios
+                        .delete(this.endpoint)
+                        .then(res => {
+                            console.log($(this.$el));
+                            $(this.$el).fadeOut(500, () => {
+                                alert(res.data.message);
+                            });
+                        });
+                }
             }
         },
         computed: {
             isInvalid() {
                 return this.body.trim().length === 0;
+            },
+            endpoint() {
+                return `/questions/${this.questionId}/answers/${this.id}`;
             }
         }
     }

@@ -23,11 +23,7 @@
                                 <a @click.prevent="edit" href="{{ route('questions.answers.edit', [$question->id, $answer->id]) }}" class="btn btn-sm btn-outline-info">Edit</a>
                             @endcan
                             @if(Auth::check() && Auth::user()->can('delete', $answer))
-                                <form class="d-inline" action="{{ route('questions.answers.destroy', [$question->id, $answer->id]) }}" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return window.confirm('Are you sure?');">Delete</button>
-                                </form>
+                                <button @click="destroy" class="btn btn-outline-danger btn-sm">Delete</button>
                             @endif
                         </div>
                     </div>
