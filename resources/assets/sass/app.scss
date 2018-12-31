@@ -89,3 +89,7 @@
     border-bottom: 1px solid rgba($black, 0.1);
   }
 }
+
+[v-cloak] { // Khi nao load xong vue instance, cai nay tu mat! Do phai thay qua trinh load tu tu cua no!
+  display: none;
+}

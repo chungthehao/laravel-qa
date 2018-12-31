@@ -13,7 +13,7 @@ class Answer extends Model
         'user_id'
     ];
 
-    protected $appends = ['created_date'];
+    protected $appends = ['created_date', 'body_html'];
 
     public function question() {
         return $this->belongsTo(Question::class, 'question_id', 'id');
@@ -62,7 +62,7 @@ class Answer extends Model
 
         # Chạy đoạn code này khi answer (model instance) được save (cả create và khi update)
         static::saved(function ($answer) {// $answer represent the current model instance
-            echo "Answer is Saved!\n";
+            //echo "Answer is Saved!\n";
         });
 
         /* Các bước test create */
