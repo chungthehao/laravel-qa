@@ -36,9 +36,10 @@
     </form>
 
     @if($model instanceof App\Question)
-        @include('shared._favorite', [
-            'model' => $model
-        ])
+        {{--@include('shared._favorite', [--}}
+            {{--'model' => $model--}}
+        {{--])--}}
+        <favorite v-bind:question="{{ $model }}"></favorite>
     @elseif($model instanceof App\Answer)
         @include('shared._accept_answer', [
             'model' => $model
