@@ -13,7 +13,7 @@ class Answer extends Model
         'user_id'
     ];
 
-    protected $appends = ['created_date', 'body_html'];
+    protected $appends = ['created_date', 'body_html', 'is_best'];
 
     public function question() {
         return $this->belongsTo(Question::class, 'question_id', 'id');
@@ -33,9 +33,10 @@ class Answer extends Model
         return $this->created_at->diffForHumans();
     }
 
-    public function getStatusAttribute() {
-        return $this->isBest() ? 'vote-accepted' : '';
-    }
+    /* Đã thực hiện ở Accept.vue component */
+//    public function getStatusAttribute() {
+//        return $this->isBest() ? 'vote-accepted' : '';
+//    }
 
     public function getIsBestAttribute() {
         return $this->isBest();

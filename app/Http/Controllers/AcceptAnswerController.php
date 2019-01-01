@@ -15,6 +15,11 @@ class AcceptAnswerController extends Controller
         // acceptBestAnswer method nằm trong Question class
         $answer->question->acceptBestAnswer($answer);
 
+        if (request()->expectsJson()) {
+            return response()->json([
+                'message' => 'You have just accepted this answer as best answer!'
+            ]);
+        }
         return back();
     }
 }

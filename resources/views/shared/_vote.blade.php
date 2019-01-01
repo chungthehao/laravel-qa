@@ -39,10 +39,13 @@
         {{--@include('shared._favorite', [--}}
             {{--'model' => $model--}}
         {{--])--}}
+
         <favorite v-bind:question="{{ $model }}"></favorite>
     @elseif($model instanceof App\Answer)
-        @include('shared._accept_answer', [
-            'model' => $model
-        ])
+        {{--@include('shared._accept_answer', [--}}
+            {{--'model' => $model--}}
+        {{--])--}}
+
+        <accept v-bind:answer="{{ $model }}"></accept>
     @endif
 </div>
