@@ -15,8 +15,14 @@ class VoteQuestionController extends Controller
         $vote = (int) request()->vote;
 
         // auth()->user() get current login user instance
-        auth()->user()->voteTheQuestion($question, $vote);
+        $votesCount = auth()->user()->voteTheQuestion($question, $vote);
 
+        if (request()->expectsJson()) {
+            return response()->json([
+                'message'       => 'Thanks for the feedback!',
+                'votesCount'    => $votesCount
+            ]);
+        }
         return back();
     }
 }

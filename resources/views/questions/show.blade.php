@@ -16,9 +16,10 @@
                         </div>
                         <hr>
                         <div class="media">
-                            @include('shared._vote', [
-                                'model' => $question
-                            ])
+                            {{--@include('shared._vote', [--}}
+                                {{--'model' => $question--}}
+                            {{--])--}}
+                            <vote v-bind:model="{{ $question }}" name="question"></vote>
 
                             <div class="media-body">
                                 {!! $question->body_html !!}

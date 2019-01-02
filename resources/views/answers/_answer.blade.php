@@ -1,8 +1,9 @@
 <answer v-bind:answer="{{ $answer }}" inline-template>
     <div class="media post">
-        @include('shared._vote', [
-            'model' => $answer
-        ])
+        {{--@include('shared._vote', [--}}
+            {{--'model' => $answer--}}
+        {{--])--}}
+        <vote v-bind:model="{{ $answer }}" name="answer"></vote>
 
         <div class="media-body">
             <form v-if="editing" @submit.prevent="update">
