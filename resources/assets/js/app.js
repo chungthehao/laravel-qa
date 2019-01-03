@@ -27,10 +27,11 @@ Vue.use(Authorization);
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('user-info', require('./components/UserInfo.vue'));
-Vue.component('answer', require('./components/Answer.vue'));
+// Vue.component('answer', require('./components/Answer.vue')); Chỉ dùng trong Answers.vue component
 // Vue.component('favorite', require('./components/Favorite.vue')); // Chỉ dùng trong Vote.vue, ko cần lấy ở đây
 // Vue.component('accept', require('./components/Accept.vue')); // Chỉ dùng trong Vote.vue, ko cần lấy ở đây
 Vue.component('vote', require('./components/Vote.vue'));
+Vue.component('answers', require('./components/Answers.vue'));
 
 const app = new Vue({
     el: '#app'

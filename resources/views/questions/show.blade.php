@@ -42,12 +42,13 @@
             </div>
         </div>
 
-        @if($question->answers_count)
-            @include('answers._index', array(
-                'answers_count' => $question->answers_count,
-                'answers' => $question->answers,
-            ))
-        @endif
+        {{--@if($question->answers_count)--}}
+            {{--@include('answers._index', array(--}}
+                {{--'answers_count' => $question->answers_count,--}}
+                {{--'answers' => $question->answers,--}}
+            {{--))--}}
+        {{--@endif--}}
+        <answers v-bind:answers="{{ $question->answers }}" v-bind:count="{{ $question->answers_count }}"></answers>
 
         @include('answers._create', [
             'question' => $question
