@@ -8,6 +8,19 @@ use Illuminate\Http\Request;
 
 class AnswersController extends Controller
 {
+    public function __construct()
+    {
+        // Người dùng phải đăng nhập để: tạo - chỉnh sửa - xóa answer
+        // Người dùng nếu chưa đăng nhập thì chỉ đc xem các answers của question thôi (index method)
+        $this->middleware('auth')->except('index');
+    }
+
+    public function index(Question $question)
+    {
+        return $question->answers()->with('user')->simplePaginate(3);
+        //--------------------------- Eager loading user của mỗi answer (method user() trong Answer model)
+    }
+
     /**
      * Store a newly created resource in storage.
      *

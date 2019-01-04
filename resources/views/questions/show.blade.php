@@ -48,7 +48,12 @@
                 {{--'answers' => $question->answers,--}}
             {{--))--}}
         {{--@endif--}}
-        <answers v-bind:answers="{{ $question->answers }}" v-bind:count="{{ $question->answers_count }}"></answers>
+
+        {{-- Trước khi có tính năng "Load more answers" --}}
+        {{--<answers v-bind:answers="{{ $question->answers }}" v-bind:count="{{ $question->answers_count }}"></answers>--}}
+
+        {{-- Khi implement tính năng "Load more answers" --}}
+        <answers v-bind:question="{{ $question }}"></answers>
 
         @include('answers._create', [
             'question' => $question
