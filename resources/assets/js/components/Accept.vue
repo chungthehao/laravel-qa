@@ -19,6 +19,8 @@
 </template>
 
 <script>
+    import EventBus from '../event-bus';
+
     export default {
         props: ['answer'],
 
@@ -27,6 +29,15 @@
                 isBest: this.answer.is_best,
                 id: this.answer.id
             };
+        },
+
+        created() {
+            // Event này là nghe từ cha đổ xuống nha (từ root)
+            // Đã trực chờ sẵn nghe event này từ lúc mới hình thành instance rồi!
+            // Sâu xa: communicate giữa các components với nhau.
+            EventBus.$on('accepted', id => {
+                this.isBest = this.id === id;
+            });
         },
 
         methods: {
@@ -40,6 +51,8 @@
                         });
                         // Cập nhật lại isBest
                         this.isBest = true;
+
+                        EventBus.$emit('accepted', this.id);
                     });
             }
         },

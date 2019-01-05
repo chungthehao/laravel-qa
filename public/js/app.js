@@ -54643,6 +54643,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__event_bus__ = __webpack_require__(75);
 //
 //
 //
@@ -54663,6 +54664,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['answer'],
@@ -54673,19 +54676,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             id: this.answer.id
         };
     },
+    created: function created() {
+        var _this = this;
+
+        // Event này là nghe từ cha đổ xuống nha (từ root)
+        // Đã trực chờ sẵn nghe event này từ lúc mới hình thành instance rồi!
+        // Sâu xa: communicate giữa các components với nhau.
+        __WEBPACK_IMPORTED_MODULE_0__event_bus__["a" /* default */].$on('accepted', function (id) {
+            _this.isBest = _this.id === id;
+        });
+    },
 
 
     methods: {
         create: function create() {
-            var _this = this;
+            var _this2 = this;
 
             axios.post('/answers/' + this.id + '/accept').then(function (res) {
-                _this.$toast.success(res.data.message, 'Success', {
+                _this2.$toast.success(res.data.message, 'Success', {
                     timeout: 3000,
                     position: 'bottomLeft'
                 });
                 // Cập nhật lại isBest
-                _this.isBest = true;
+                _this2.isBest = true;
+
+                __WEBPACK_IMPORTED_MODULE_0__event_bus__["a" /* default */].$emit('accepted', _this2.id);
             });
         }
     },
@@ -55335,6 +55350,20 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 74 */,
+/* 75 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+
+
+var eventBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a();
+
+/* harmony default export */ __webpack_exports__["a"] = (eventBus);
 
 /***/ })
 /******/ ]);
