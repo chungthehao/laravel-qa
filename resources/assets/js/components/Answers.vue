@@ -13,7 +13,7 @@
                     <!--@foreach($answers as $answer)-->
                     <!--@include('answers._answer')-->
                     <!--@endforeach-->
-                    <answer v-for="answer in answers" v-bind:answer="answer" v-bind:key="answer.id"></answer>
+                    <answer v-on:deleted="remove(index)" v-for="(answer, index) in answers" v-bind:answer="answer" v-bind:key="answer.id"></answer>
                     <!-- Kể từ Vue version 2.2 v-for phải có kèm key, ko thì sẽ lỗi -->
 
                     <div class="text-center mt-3" v-if="nextUrl">
@@ -47,6 +47,10 @@
         },
 
         methods: {
+            remove(index) {
+                this.answers.splice(index, 1);
+                this.count--;
+            },
             fetch(endpoint) {
                 axios
                     .get(endpoint)

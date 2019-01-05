@@ -89,10 +89,15 @@
                             axios
                                 .delete(this.endpoint)
                                 .then(res => {
-                                    console.log($(this.$el));
-                                    $(this.$el).fadeOut(500, () => {
-                                        this.$toast.success(res.data.message, 'Success', { timeout: 3000 });
-                                    });
+                                    // DÙNG JQUERY XÓA TẠM
+                                    // console.log($(this.$el));
+                                    // $(this.$el).fadeOut(500, () => {
+                                    //     this.$toast.success(res.data.message, 'Success', { timeout: 3000 });
+                                    // });
+
+                                    // CUSTOM EVENT
+                                    // Tạo ở child, parent listen (còn data thì ko thể truyền ngược, one way data)
+                                    this.$emit('deleted')
                                 });
                             instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
                         }, true],
