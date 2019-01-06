@@ -10,7 +10,7 @@ class Question extends Model
 
     protected $fillable = ['title', 'body'];
 
-    protected $appends = ['created_date', 'is_favorited', 'favorites_count']; // Để khi có model instance là có luôn accessor
+    protected $appends = ['created_date', 'is_favorited', 'favorites_count', 'body_html']; // Để khi có model instance là có luôn accessor
 
     public function user() {
         return $this->belongsTo(User::class, 'user_id', 'id');
