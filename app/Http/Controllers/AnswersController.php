@@ -34,7 +34,7 @@ class AnswersController extends Controller
             'body' =>'required'
         ]);*/
 
-        $question->answers()->create(
+        $newAnswer = $question->answers()->create(
             $request->validate([
                 'body' =>'required'
             ])
@@ -46,6 +46,12 @@ class AnswersController extends Controller
             ]
         );
 
+        if (request()->expectsJson()) {
+            return response()->json([
+                'message' => 'Your answer has been submitted successfully!',
+                'answer' => $newAnswer->load('user')
+            ]);
+        }
         return back()->with('success', 'Your answer has been submitted successfully!');
     }
 

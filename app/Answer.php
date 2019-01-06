@@ -54,7 +54,7 @@ class Answer extends Model
         # Chạy đoạn code này khi answer (model instance) được create
         static::created(function ($answer) {// $answer represent the current model instance
             # Testing purpose
-            echo "Answer is Created!\n";
+//            echo "Answer is Created!\n";
 
             $answer->question->increment('answers_count');
             // Không cần gọi tiếp $answer->question->save()

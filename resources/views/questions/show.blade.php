@@ -55,8 +55,9 @@
         {{-- Khi implement tính năng "Load more answers" --}}
         <answers v-bind:question="{{ $question }}"></answers>
 
-        @include('answers._create', [
-            'question' => $question
-        ])
+        {{-- ĐÃ IMPLEMENT NewAnswer COMPONENT TRONG Answers COMPONENT --}}
+        {{--@include('answers._create', [--}}
+            {{--'question' => $question--}}
+        {{--])--}}
     </div>
 @endsection

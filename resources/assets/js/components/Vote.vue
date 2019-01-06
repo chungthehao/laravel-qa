@@ -31,7 +31,7 @@
 
         data() {
             return {
-                votesCount: this.model.votes_count,
+                votesCount: this.model.votes_count || 0,
                 id: this.model.id // id của question hoặc answer
             };
         },
