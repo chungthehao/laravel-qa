@@ -35,13 +35,18 @@
 <script>
     import Vote from './Vote.vue';
     import UserInfo from './UserInfo.vue';
+    import modification from '../mixins/modification';
 
     export default {
+        mixins: [modification],
+
         components: { Vote, UserInfo },
+
         props: ['answer'],
+
         data() {
             return {
-                editing: false,
+                // editing: false, // Đã có trong mixin 'modification'
                 body: this.answer.body,
                 bodyHtml: this.answer.body_html,
                 id: this.answer.id,
@@ -50,70 +55,40 @@
             };
         },
         methods: {
-            edit() {
+            setEditCache() {
                 this.beforeEditCache = this.body;
-                this.editing = true;
+                // this.editing = true; // Đã có trong mixin 'modification'
             },
 
-            cancel() {
+            restoreFromCache() {
                 this.body = this.beforeEditCache;
-                this.editing = false;
+                // this.editing = false; // Đã có trong mixin 'modification'
             },
 
-            update() {
+            payload() {
+                return {
+                    body: this.body
+                };
+            },
+
+            delete() {
                 axios
-                    .patch(this.endpoint, {
-                        body: this.body
-                    })
+                    .delete(this.endpoint)
                     .then(res => {
-                        console.log(res);
-                        this.bodyHtml = res.data.body_html;
-                        this.editing = false;
-                        this.$toast.success(res.data.message, 'Success', { timeout: 3000 });
-                    })
-                    .catch(err => {
-                        console.log('Something went wrong!');
-                        console.log(err.response);
-                        this.$toast.error(err.response.data.message, 'Error', { timeout: 3000 });
+                        // DÙNG JQUERY XÓA TẠM
+                        // console.log($(this.$el));
+                        // $(this.$el).fadeOut(500, () => {
+                        //     this.$toast.success(res.data.message, 'Success', { timeout: 3000 });
+                        // });
+
+                        // CUSTOM EVENT
+                        // Tạo ở child, parent listen (còn data thì ko thể truyền ngược, one way data)
+                        this.$toast.success(res.data.message, 'Success', {timeout: 2000});
+                        this.$emit('deleted')
                     });
-            },
-
-            destroy() {
-                this.$toast.question('Are you sure about that?', 'Confirmation', {
-                    timeout: 20000,
-                    close: false,
-                    overlay: true,
-                    displayMode: 'once',
-                    id: 'question',
-                    zindex: 999,
-                    title: 'Hey',
-                    position: 'center',
-                    buttons: [
-                        ['<button><b>YES</b></button>', (instance, toast) => {
-                            axios
-                                .delete(this.endpoint)
-                                .then(res => {
-                                    // DÙNG JQUERY XÓA TẠM
-                                    // console.log($(this.$el));
-                                    // $(this.$el).fadeOut(500, () => {
-                                    //     this.$toast.success(res.data.message, 'Success', { timeout: 3000 });
-                                    // });
-
-                                    // CUSTOM EVENT
-                                    // Tạo ở child, parent listen (còn data thì ko thể truyền ngược, one way data)
-                                    this.$emit('deleted')
-                                });
-                            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-                        }, true],
-                        ['<button>NO</button>', function (instance, toast) {
-
-                            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-
-                        }],
-                    ],
-                });
             }
         },
+
         computed: {
             isInvalid() {
                 return this.body.trim().length === 0;
