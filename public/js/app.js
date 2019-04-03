@@ -25182,8 +25182,8 @@ var app = new Vue({
   el: '#app'
 });
 
-var name = 'The Hao';
-console.log('Hi ' + name);
+// const name = 'The Hao';
+// console.log(`Hi ${name}`);
 
 /***/ }),
 /* 18 */
