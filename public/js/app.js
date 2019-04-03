@@ -25127,8 +25127,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(17);
-__webpack_require__(84);
-module.exports = __webpack_require__(85);
+module.exports = __webpack_require__(84);
 
 
 /***/ }),
@@ -25182,6 +25181,9 @@ Vue.component('question-page', __webpack_require__(58));
 var app = new Vue({
   el: '#app'
 });
+
+var name = 'The Hao';
+console.log('Hi ' + name);
 
 /***/ }),
 /* 18 */
@@ -56160,16 +56162,6 @@ if (false) {
 
 /***/ }),
 /* 84 */
-/***/ (function(module, exports) {
-
-$(document).ready(function () {
-    var name = 'Hao';
-
-    console.log('Hi ' + name);
-});
-
-/***/ }),
-/* 85 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

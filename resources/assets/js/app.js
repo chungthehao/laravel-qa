@@ -38,3 +38,6 @@ Vue.component('question-page', require('./pages/QuestionPage.vue'));
 const app = new Vue({
     el: '#app'
 });
+
+const name = 'The Hao';
+console.log(`Hi ${name}`);
