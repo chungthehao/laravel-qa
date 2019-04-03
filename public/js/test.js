@@ -76,11 +76,10 @@ module.exports = __webpack_require__(86);
 /***/ 86:
 /***/ (function(module, exports) {
 
-$(document).ready(function () {
-    var name = 'Hao';
 
-    console.log('Hello ' + name + ' !!');
-});
+var name = 'Hao';
+
+console.log('Hello ' + name + '... !!');
 
 /***/ })
 
