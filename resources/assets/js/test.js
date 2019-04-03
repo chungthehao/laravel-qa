@@ -1,5 +1,4 @@
-$(document).ready(function() {
-    const name = 'Hao';
 
-    console.log(`Hello ${name} !!`);
-});
+const name = 'Hao';
+
+console.log(`Hello ${name} !!`);
