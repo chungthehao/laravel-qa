@@ -79,7 +79,14 @@
 
 <!-- Scripts -->
 <script>
-    window.Auth = {!! json_encode(['signedIn' => Auth::check(), 'user' => Auth::user()]) !!};
+    // Luu toan cuc o bien window cua browser
+    var authObj = {!! json_encode(['signedIn' => Auth::check(), 'user' => Auth::user()]) !!};
+    window.Auth = authObj;
+
+    // Luu them o localStorage
+    localStorage.setItem('authInfo', JSON.stringify(authObj));
+
+    console.log(authObj);
 </script>
 
 <script src="{{ asset('js/app.js') }}"></script>
