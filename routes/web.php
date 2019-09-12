@@ -31,3 +31,9 @@ Route::delete('questions/{question}/favorites', 'FavoritesController@destroy')->
 
 Route::post('questions/{question}/vote', 'VoteQuestionController');
 Route::post('answers/{answer}/vote', 'VoteAnswerController');
+
+Route::get('test/query', function (\Illuminate\Http\Request $request) {
+    return $request->query('q');
+    // Access: http://127.0.0.1:8000/test/query?q[]=1&q[]=8
+    // Result: ["1","8"]
+});

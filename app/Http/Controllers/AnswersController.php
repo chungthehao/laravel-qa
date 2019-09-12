@@ -17,8 +17,16 @@ class AnswersController extends Controller
 
     public function index(Question $question)
     {
-        return $question->answers()->with('user')->simplePaginate(3);
-        //--------------------------- Eager loading user của mỗi answer (method user() trong Answer model)
+        // Eager loading user của mỗi answer (method user() trong Answer model)
+        $answers = $question->answers()->with('user');
+
+        // Ý tưởng là loại bỏ những cái đc thêm mới single page ở phía client side TRƯỚC khi paginate
+        if (request()->has('excludes')) {
+            $answers->whereNotIn('id', request()->query('excludes'));
+        }
+
+        return $answers->simplePaginate(3);
+        //return $question->answers()->with('user')->simplePaginate(3);
     }
 
     /**

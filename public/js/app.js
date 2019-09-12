@@ -55517,7 +55517,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             questionId: this.question.id,
             count: this.question.answers_count,
             answers: [],
-            nextUrl: null
+            nextUrl: null,
+            excludeAnswers: []
         };
     },
     created: function created() {
@@ -55529,6 +55530,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
     methods: {
         add: function add(answer) {
+            this.excludeAnswers.push(answer);
             this.answers.push(answer);
             this.count++;
         },
@@ -55554,6 +55556,16 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     computed: {
         totalAnswers: function totalAnswers() {
             return this.count + ' ' + (this.count > 1 ? 'Answers' : 'Answer');
+        },
+        theNextUrl: function theNextUrl() {
+            if (this.nextUrl && this.excludeAnswers.length) {
+                // this will produce:
+                // http://localhost:8000/questions/1/answers&page=1&excludes[]=1&excludes[]=2
+                return this.nextUrl + this.excludeAnswers.map(function (a) {
+                    return '&excludes[]=' + a.id;
+                }).join('');
+            }
+            return this.nextUrl;
         }
     },
 
@@ -56089,7 +56101,7 @@ var render = function() {
                       })
                     }),
                     _vm._v(" "),
-                    _vm.nextUrl
+                    _vm.theNextUrl
                       ? _c("div", { staticClass: "text-center mt-3" }, [
                           _c(
                             "button",
@@ -56097,7 +56109,7 @@ var render = function() {
                               staticClass: "btn btn-outline-secondary",
                               on: {
                                 click: function($event) {
-                                  _vm.fetch(_vm.nextUrl)
+                                  _vm.fetch(_vm.theNextUrl)
                                 }
                               }
                             },

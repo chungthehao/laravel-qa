@@ -17,8 +17,8 @@
                         <answer v-on:deleted="remove(index)" v-for="(answer, index) in answers" v-bind:answer="answer" v-bind:key="answer.id"></answer>
                         <!-- Kể từ Vue version 2.2 v-for phải có kèm key, ko thì sẽ lỗi -->
 
-                        <div class="text-center mt-3" v-if="nextUrl">
-                            <button @click="fetch(nextUrl)" class="btn btn-outline-secondary">Load more answers</button>
+                        <div class="text-center mt-3" v-if="theNextUrl">
+                            <button @click="fetch(theNextUrl)" class="btn btn-outline-secondary">Load more answers</button>
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,8 @@
                 questionId: this.question.id,
                 count: this.question.answers_count,
                 answers: [],
-                nextUrl: null
+                nextUrl: null,
+                excludeAnswers: []
             };
         },
 
@@ -53,6 +54,7 @@
 
         methods: {
             add(answer) {
+                this.excludeAnswers.push(answer);
                 this.answers.push(answer);
                 this.count++;
             },
@@ -74,6 +76,14 @@
         computed: {
             totalAnswers() {
                 return `${this.count} ${this.count > 1 ? 'Answers' : 'Answer'}`;
+            },
+            theNextUrl () {
+                if (this.nextUrl && this.excludeAnswers.length) {
+                    // this will produce:
+                    // http://localhost:8000/questions/1/answers&page=1&excludes[]=1&excludes[]=2
+                    return this.nextUrl + this.excludeAnswers.map(a => '&excludes[]=' + a.id).join('');
+                }
+                return this.nextUrl;
             }
         },
 
