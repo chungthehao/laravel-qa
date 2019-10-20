@@ -22,9 +22,16 @@
 
 <script>
 import MarkdownIt from 'markdown-it';
+import prism from 'markdown-it-prism';
 import autosize from 'autosize'
 
+// Chọn theme
+// Cách 1:
+// import 'prismjs/themes/prism-tomorrow.css';
+// Cách 2: Copy ra ngoài public/css đưa vô trong layout, cần thì đổi ở layout ko cần build lại
+
 const md = new MarkdownIt();
+md.use(prism);
 
 export default {
     props: ['body'],
@@ -47,8 +54,8 @@ export default {
         }
     },
     methods: {
-        autoResizeTextarea() {
-            autosize(this.$el.querySelector('textarea'))
+        autoResizeTextarea: function() {
+            autosize(this.$el.querySelector('textarea'));
         }
     }
 }
