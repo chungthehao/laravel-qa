@@ -13,6 +13,7 @@
         "@fortawesome/fontawesome-free": "^5.4.1",
         "@fortawesome/fontawesome-svg-core": "^1.2.6",
         "@fortawesome/free-solid-svg-icons": "^5.4.1",
+        "autosize": "^4.0.2",
         "axios": "^0.18",
         "bootstrap": "^4.0.0",
         "cross-env": "^5.1",

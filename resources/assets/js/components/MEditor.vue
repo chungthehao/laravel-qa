@@ -22,14 +22,33 @@
 
 <script>
 import MarkdownIt from 'markdown-it';
+import autosize from 'autosize'
+
 const md = new MarkdownIt();
 
 export default {
     props: ['body'],
+    mounted() {
+        this.autoResizeTextarea();
+    },
+    updated() {
+        // console.log('updated hook');
+        this.autoResizeTextarea();
+    },
+    watch: {
+        body() {
+            // console.log('body watcher')
+        }
+    },
     computed: {
         preview() {
             // Convert markdown string into html
             return md.render(this.body);
+        }
+    },
+    methods: {
+        autoResizeTextarea() {
+            autosize(this.$el.querySelector('textarea'))
         }
     }
 }
