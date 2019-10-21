@@ -2,7 +2,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <form class="card-body" v-if="editing" @submit.prevent="update">
+                <form class="card-body" v-show="authorize('modify', question) && editing" @submit.prevent="update">
                     <div class="card-title">
                         <input type="text" class="form-control form-control-lg" v-model="title">
                     </div>
@@ -20,7 +20,7 @@
                     </div><!-- END: MEDIA -->
                 </form><!-- END: CARD BODY -->
 
-                <div v-else class="card-body">
+                <div v-show="!editing" class="card-body">
                     <div class="card-title">
                         <div class="d-flex align-items-center">
                             <h2 class="mb-0">{{ title }}</h2>
@@ -34,7 +34,7 @@
                         <vote v-bind:model="question" name="question"></vote>
 
                         <div class="media-body">
-                            <div v-html="bodyHtml"></div>
+                            <div v-html="bodyHtml" ref="bodyHtml"></div>
 
                             <div class="row">
                                 <div class="col-4">
@@ -61,6 +61,7 @@
     import UserInfo from './UserInfo.vue';
     import modification from '../mixins/modification';
     import MEditor from './MEditor'
+    import Prism from 'prismjs';
 
     export default {
         mixins: [modification],
@@ -101,6 +102,10 @@
             restoreFromCache() {
                 this.title = this.beforeEditCache.title;
                 this.body = this.beforeEditCache.body;
+
+                // Fixing Syntax Highlight issue when cancel editing
+                const el = this.$refs.bodyHtml;
+                if (el) Prism.highlightAllUnder(el); // https://prismjs.com/extending.html
             },
 
             payload() {
