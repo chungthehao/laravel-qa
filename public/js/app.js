@@ -26410,8 +26410,13 @@ module.exports = Component.exports
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__highlight__ = __webpack_require__(596);
 /* Làm Mixin để xài chung ở Question.vue và Answer.vue */
+
+
 /* harmony default export */ __webpack_exports__["a"] = ({
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__highlight__["a" /* default */]],
+
     data: function data() {
         return {
             editing: false
@@ -26450,6 +26455,10 @@ module.exports = Component.exports
                 _this.bodyHtml = data.body_html;
                 _this.$toast.success(data.message, 'Success', { timeout: 3000 });
                 _this.editing = false;
+
+                // this.highlight(); // WHY IS THIS NOT WORKING?
+            }).then(function () {
+                return _this.highlight();
             });
         },
         destroy: function destroy() {
@@ -73919,8 +73928,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_modification__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MEditor__ = __webpack_require__(499);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MEditor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__MEditor__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_prismjs__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_prismjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_prismjs__);
 //
 //
 //
@@ -73979,7 +73986,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
 
 
 
@@ -74024,10 +74030,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         restoreFromCache: function restoreFromCache() {
             this.title = this.beforeEditCache.title;
             this.body = this.beforeEditCache.body;
-
-            // Fixing Syntax Highlight issue when cancel editing
-            var el = this.$refs.bodyHtml;
-            if (el) __WEBPACK_IMPORTED_MODULE_4_prismjs___default.a.highlightAllUnder(el); // https://prismjs.com/extending.html
         },
         payload: function payload() {
             return {
@@ -74733,11 +74735,9 @@ md.use(__WEBPACK_IMPORTED_MODULE_1_markdown_it_prism___default.a);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['body'],
-    mounted: function mounted() {
-        this.autoResizeTextarea();
-    },
     updated: function updated() {
-        // console.log('updated hook');
+        // khi nhấn 'Edit' (ở parent: Question component) tại sao chạy hook này?? props 'body' đâu có đổi
+        //console.log('updated hook');
         this.autoResizeTextarea();
     },
 
@@ -84860,6 +84860,27 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 593 */,
+/* 594 */,
+/* 595 */,
+/* 596 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prismjs__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prismjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_prismjs__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    methods: {
+        highlight: function highlight() {
+            var el = this.$refs.bodyHtml;
+            if (el) __WEBPACK_IMPORTED_MODULE_0_prismjs___default.a.highlightAllUnder(el); // https://prismjs.com/extending.html
+        }
+    }
+});
 
 /***/ })
 /******/ ]);

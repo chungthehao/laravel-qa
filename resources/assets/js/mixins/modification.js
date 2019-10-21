@@ -1,5 +1,9 @@
 /* Làm Mixin để xài chung ở Question.vue và Answer.vue */
+import highlight from './highlight'
+
 export default {
+    mixins: [highlight],
+
     data() {
         return {
             editing: false,
@@ -38,7 +42,10 @@ export default {
                     this.bodyHtml = data.body_html;
                     this.$toast.success(data.message, 'Success', {  timeout: 3000  });
                     this.editing = false;
-                });
+
+                    // this.highlight(); // WHY IS THIS NOT WORKING?
+                })
+                .then(() => this.highlight());
         },
 
         destroy() {

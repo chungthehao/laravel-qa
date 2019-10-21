@@ -61,7 +61,6 @@
     import UserInfo from './UserInfo.vue';
     import modification from '../mixins/modification';
     import MEditor from './MEditor'
-    import Prism from 'prismjs';
 
     export default {
         mixins: [modification],
@@ -102,10 +101,6 @@
             restoreFromCache() {
                 this.title = this.beforeEditCache.title;
                 this.body = this.beforeEditCache.body;
-
-                // Fixing Syntax Highlight issue when cancel editing
-                const el = this.$refs.bodyHtml;
-                if (el) Prism.highlightAllUnder(el); // https://prismjs.com/extending.html
             },
 
             payload() {

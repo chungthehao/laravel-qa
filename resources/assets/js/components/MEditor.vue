@@ -35,11 +35,8 @@ md.use(prism);
 
 export default {
     props: ['body'],
-    mounted() {
-        this.autoResizeTextarea();
-    },
-    updated() {
-        // console.log('updated hook');
+    updated() { // khi nhấn 'Edit' (ở parent: Question component) tại sao chạy hook này?? props 'body' đâu có đổi
+        //console.log('updated hook');
         this.autoResizeTextarea();
     },
     watch: {
