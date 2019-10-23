@@ -3,15 +3,17 @@
         <vote v-bind:model="answer" name="answer"></vote>
 
         <div class="media-body">
-            <form v-if="editing" @submit.prevent="update">
+            <form v-show="authorize('modify', answer) && editing" @submit.prevent="update">
                 <div class="form-group">
-                    <textarea v-model="body" rows="10" class="form-control" required></textarea>
+                    <m-editor :body="body" :name="uniqueName">
+                        <textarea v-model="body" rows="10" class="form-control" required></textarea>
+                    </m-editor>
                 </div>
                 <button class="btn btn-primary" type="submit" :disabled="isInvalid">Save</button>
                 <button class="btn btn-secondary" @click="cancel" type="button">Cancel</button>
             </form>
-            <div v-else>
-                <div v-html="bodyHtml"></div>
+            <div v-show="!editing">
+                <div v-html="bodyHtml" ref="bodyHtml"></div>
 
                 <div class="row">
                     <div class="col-4">
@@ -33,14 +35,10 @@
 </template>
 
 <script>
-    import Vote from './Vote.vue';
-    import UserInfo from './UserInfo.vue';
     import modification from '../mixins/modification';
 
     export default {
         mixins: [modification],
-
-        components: { Vote, UserInfo },
 
         props: ['answer'],
 
@@ -95,6 +93,9 @@
             },
             endpoint() {
                 return `/questions/${this.questionId}/answers/${this.id}`;
+            },
+            uniqueName() {
+                return `answer-${this.id}`;
             }
         }
     }
