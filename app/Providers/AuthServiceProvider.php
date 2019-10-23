@@ -6,6 +6,7 @@ use App\Policies\QuestionPolicy;
 use App\Question;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -32,6 +33,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // Register some routes that necessary to issue access tokens. Revoke (thu hồi) access token clients and personal access token
+        Passport::routes(); // Rồi chạy php artisan route:list --name=passport coi thử đi.
     }
 }

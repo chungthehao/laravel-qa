@@ -35,6 +35,15 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
+            // Thêm 'CreateFreshApiToken' thì Laravel làm dùm mình chuyện này:
+            /**
+             * axios.post('/questions', {
+             *     headers: { Authorization: `Bearer ${this.token}` }
+             * })
+             */
+            \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class,
+            // This will help us consuming our API much easier (Mình gọi API thoải mái khỏi lo nhớ truyền access token)
         ],
 
         'api' => [
