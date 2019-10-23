@@ -61,7 +61,10 @@
                 this.answers.push(answer);
                 this.count++;
 
-                this.highlight();
+                // In order to wait until VueJS has finished updating the DOM -> nextTick
+                this.$nextTick(() => {
+                    this.highlight(`answer-${answer.id}`);
+                })
             },
             remove(index) {
                 this.answers.splice(index, 1);

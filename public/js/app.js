@@ -83879,7 +83879,9 @@ if (false) {
 /* harmony default export */ __webpack_exports__["a"] = ({
     methods: {
         highlight: function highlight() {
-            var el = this.$refs.bodyHtml;
+            var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+            var el = id === '' ? this.$refs.bodyHtml : document.getElementById(id);
 
             console.log('el', el);
 
@@ -84244,26 +84246,31 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
     methods: {
         add: function add(answer) {
+            var _this = this;
+
             this.excludeAnswers.push(answer);
             this.answers.push(answer);
             this.count++;
 
-            this.highlight();
+            // In order to wait until VueJS has finished updating the DOM -> nextTick
+            this.$nextTick(function () {
+                _this.highlight('answer-' + answer.id);
+            });
         },
         remove: function remove(index) {
             this.answers.splice(index, 1);
             this.count--;
         },
         fetch: function fetch(endpoint) {
-            var _this = this;
+            var _this2 = this;
 
             axios.get(endpoint).then(function (_ref) {
                 var _answers;
 
                 var data = _ref.data;
                 // { data }: destructuring object property
-                (_answers = _this.answers).push.apply(_answers, _toConsumableArray(data.data));
-                _this.nextUrl = data.next_page_url;
+                (_answers = _this2.answers).push.apply(_answers, _toConsumableArray(data.data));
+                _this2.nextUrl = data.next_page_url;
                 //console.log(data);
             });
         }
@@ -84547,6 +84554,7 @@ var render = function() {
           [
             _c("div", {
               ref: "bodyHtml",
+              attrs: { id: _vm.uniqueName },
               domProps: { innerHTML: _vm._s(_vm.bodyHtml) }
             }),
             _vm._v(" "),

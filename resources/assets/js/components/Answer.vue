@@ -13,7 +13,7 @@
                 <button class="btn btn-secondary" @click="cancel" type="button">Cancel</button>
             </form>
             <div v-show="!editing">
-                <div v-html="bodyHtml" ref="bodyHtml"></div>
+                <div v-html="bodyHtml" ref="bodyHtml" :id="uniqueName"></div>
 
                 <div class="row">
                     <div class="col-4">

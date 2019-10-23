@@ -2,8 +2,8 @@ import Prism from 'prismjs';
 
 export default {
     methods: {
-        highlight() {
-            const el = this.$refs.bodyHtml;
+        highlight(id = '') {
+            const el = id === '' ? this.$refs.bodyHtml : document.getElementById(id);
 
             console.log('el', el);
 
