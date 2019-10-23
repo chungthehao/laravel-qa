@@ -5,7 +5,7 @@ export default {
         highlight(id = '') {
             const el = id === '' ? this.$refs.bodyHtml : document.getElementById(id);
 
-            console.log('el', el);
+            //console.log('el', el);
 
             if (el) Prism.highlightAllUnder(el); // https://prismjs.com/extending.html
         }

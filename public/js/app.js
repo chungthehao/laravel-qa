@@ -83883,7 +83883,7 @@ if (false) {
 
             var el = id === '' ? this.$refs.bodyHtml : document.getElementById(id);
 
-            console.log('el', el);
+            //console.log('el', el);
 
             if (el) __WEBPACK_IMPORTED_MODULE_0_prismjs___default.a.highlightAllUnder(el); // https://prismjs.com/extending.html
         }
@@ -84272,6 +84272,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 (_answers = _this2.answers).push.apply(_answers, _toConsumableArray(data.data));
                 _this2.nextUrl = data.next_page_url;
                 //console.log(data);
+
+                // this.$nextTick: Chờ VueJS render DOM xong mới làm.
+                _this2.$nextTick(function () {
+                    data.data.forEach(function (a) {
+                        _this2.highlight('answer-' + a.id);
+                    });
+                });
             });
         }
     },

@@ -77,6 +77,13 @@
                         this.answers.push(...data.data);
                         this.nextUrl = data.next_page_url;
                         //console.log(data);
+
+                        // this.$nextTick: Chờ VueJS render DOM xong mới làm.
+                        this.$nextTick(() => {
+                            data.data.forEach(a => {
+                                this.highlight(`answer-${a.id}`);
+                            });
+                        });
                     });
             }
         },
