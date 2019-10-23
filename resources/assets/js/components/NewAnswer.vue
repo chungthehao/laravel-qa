@@ -11,7 +11,9 @@
 
                     <form @submit.prevent="create">
                         <div class="form-group">
-                            <textarea v-model="body" name="body" id="" rows="7" class="form-control" required></textarea>
+                            <m-editor :body="body" name="new-answer">
+                                <textarea v-model="body" name="body" id="" rows="7" class="form-control" required></textarea>
+                            </m-editor>
                         </div>
                         <div class="form-group text-right">
                             <button v-bind:disabled="isInvalid" type="submit" class="btn btn-lg btn-outline-primary">Submit</button>
@@ -24,9 +26,11 @@
 </template>
 
 <script>
+    import MEditor from './MEditor';
+
     export default {
         props: ['questionId'],
-
+        components: { MEditor },
         methods: {
             create() {
                 axios

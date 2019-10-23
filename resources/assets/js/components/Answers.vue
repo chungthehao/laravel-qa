@@ -32,8 +32,11 @@
 <script>
     import Answer from './Answer.vue';
     import NewAnswer from './NewAnswer.vue';
+    import highlight from '../mixins/highlight';
 
     export default {
+        mixins: [highlight],
+
         props: ['question'],
 
         data() {
@@ -57,6 +60,8 @@
                 this.excludeAnswers.push(answer);
                 this.answers.push(answer);
                 this.count++;
+
+                this.highlight();
             },
             remove(index) {
                 this.answers.splice(index, 1);
