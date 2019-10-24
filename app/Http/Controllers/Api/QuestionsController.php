@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\QuestionResource;
 use App\Question;
 use http\Env\Response;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class QuestionsController extends Controller
     {
         $questions = Question::with('user')->latest()->paginate(5);
 
-        return $questions; // Laravel tự convert qua json rồi trả response về (y chang cái dưới)
+        return QuestionResource::collection($questions); // Laravel tự convert qua json rồi trả response về (tương tự cái dưới)
         // return response()->json($questions);
     }
 
