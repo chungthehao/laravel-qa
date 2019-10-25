@@ -25,7 +25,7 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         # Define custom route model bindings
-        Route::bind('slug', function($slug) {
+        //Route::bind('slug', function($slug) {
             /* Cách 1: cách cơ bản */
             // $question = Question::where('slug', $slug)->first();
             // return $question ? $question : abort(404);
@@ -43,13 +43,13 @@ class RouteServiceProvider extends ServiceProvider
             //--------------user của các answers | user của question
 
             // Tách việc query question và các answers liên quan đến nó ra, để việc 'Load more answers' dễ thực hiện
-            return Question::with(['user'])->where('slug', $slug)->first() ?? abort(404);
+            //return Question::with(['user'])->where('slug', $slug)->first() ?? abort(404);
 
             # Eager loading (solve N+1 query problem)
             // with('answers.user') có ý nghĩa là
             // answers : relation trong Question model
             // user : relation trong Answer model
-        });
+        //});
 
         parent::boot();
     }

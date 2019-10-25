@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 Route::post('token', 'Auth\LoginController@getToken');
 
 Route::get('/questions', 'Api\QuestionsController@index');
-
+Route::get('/questions/{question}-{slug}', 'Api\QuestionDetailsController');
 Route::group(['middleware' => ['auth:api']], function () {
     Route::apiResource('/questions', 'Api\QuestionsController')
         ->only(['show', 'store', 'update', 'destroy']);
