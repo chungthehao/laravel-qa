@@ -17,6 +17,11 @@ Route::post('token', 'Auth\LoginController@getToken');
 
 Route::get('/questions', 'Api\QuestionsController@index');
 
+Route::group(['middleware' => ['auth:api']], function () {
+    Route::apiResource('/questions', 'Api\QuestionsController')
+        ->only(['show', 'store', 'update', 'destroy']);
+});
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
