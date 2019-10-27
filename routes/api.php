@@ -16,10 +16,13 @@ use Illuminate\Http\Request;
 Route::post('token', 'Auth\LoginController@getToken');
 
 Route::get('/questions', 'Api\QuestionsController@index');
+Route::get('/questions/{question}/answers', 'Api\AnswersController@index');
 Route::get('/questions/{question}-{slug}', 'Api\QuestionDetailsController');
 Route::group(['middleware' => ['auth:api']], function () {
     Route::apiResource('/questions', 'Api\QuestionsController')
         ->only(['show', 'store', 'update', 'destroy']);
+    Route::apiResource('/questions.answers', 'Api\AnswersController')
+        ->only(['store', 'update', 'destroy']);
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
