@@ -38,6 +38,52 @@ class User extends Authenticatable
         return $this->hasMany(Answer::class, 'user_id', 'id');
     }
 
+    public function posts() {
+        $type = request()->get('type');
+        $posts = collect();
+
+        switch ($type) {
+            case 'questions':
+                $questions = $this->questions()->get();
+                $posts = $posts->merge($questions);
+                break;
+            case 'answers':
+                $answers = $this->answers()->with('question')->get();
+                $posts = $posts->merge($answers);
+                break;
+            default: // both
+                $questions = $this->questions()->get();
+                $answers = $this->answers()->with('question')->get(); // eager loading trước để lát lấy title của question, best_answer_id
+                $posts = $posts->merge($questions);
+                $posts = $posts->merge($answers);
+        } // End switch $type
+
+        // Tweak the structure
+        $posts = $posts->map(function ($post, $key) {
+            $item = [
+                'id' => $post->id,
+                'votes_count' => $post->votes_count,
+                'created_at' => $post->created_at->format('M d Y')
+            ];
+
+            if ($post instanceof Answer) {
+                $item['type'] = 'A';
+                $item['question_title'] = $post->question->title;
+                $item['accepted'] = $post->question->best_answer_id === $post->id;
+            } elseif ($post instanceof Question) {
+                $item['type'] = 'Q';
+                $item['question_title'] = $post->title;
+                $item['accepted'] = isset($post->best_answer_id); // Nếu question này chưa chọn best answer thì best_answer_id là null
+            }
+
+            return $item;
+        }); // End $posts->map
+
+        return $posts->sortByDesc('votes_count')->values()->all();
+        // values: Reset các key của mảng (bị lộn xộn sau khi sortByDesc)
+        // all: Convert từ collection về array
+    }
+
     public function favorites() {
         return $this->belongsToMany(Question::class, 'favorites', 'user_id', 'question_id')
                     ->withTimestamps(); // Khi attach, se co luon created_at va updated_at
