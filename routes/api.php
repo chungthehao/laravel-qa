@@ -23,6 +23,8 @@ Route::group(['middleware' => ['auth:api']], function () {
         ->only(['show', 'store', 'update', 'destroy']);
     Route::apiResource('/questions.answers', 'Api\AnswersController')
         ->only(['store', 'update', 'destroy']);
+    Route::post('questions/{question}/vote', 'Api\VoteQuestionController');
+    Route::post('answers/{answer}/vote', 'Api\VoteAnswerController');
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
