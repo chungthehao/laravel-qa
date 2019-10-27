@@ -23,8 +23,15 @@ Route::group(['middleware' => ['auth:api']], function () {
         ->only(['show', 'store', 'update', 'destroy']);
     Route::apiResource('/questions.answers', 'Api\AnswersController')
         ->only(['store', 'update', 'destroy']);
+
     Route::post('questions/{question}/vote', 'Api\VoteQuestionController');
     Route::post('answers/{answer}/vote', 'Api\VoteAnswerController');
+
+    // Single action controller, không cần chỉ ra action nào cụ thể, vì chỉ có 1
+    Route::post('/answers/{answer}/accept', 'Api\AcceptAnswerController');
+
+    Route::post('questions/{question}/favorites', 'Api\FavoritesController@store');
+    Route::delete('questions/{question}/favorites', 'Api\FavoritesController@destroy');
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
