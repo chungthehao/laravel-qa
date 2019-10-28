@@ -82,6 +82,7 @@ class QuestionsController extends Controller
         // $question->save();
         # Cách 2
         $question->increment('views'); // tự save rồi
+        $question->load('user');
 
         return view('questions.show', compact('question'));
     }

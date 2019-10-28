@@ -1,13 +1,10 @@
-import { library, dom } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
+import { config, library, dom } from '@fortawesome/fontawesome-svg-core';
 
-import { faCaretUp } from '@fortawesome/free-solid-svg-icons/faCaretUp';
+config.autoReplaceSvg = 'nest';
 
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons/faCaretDown';
-
-import { faStar } from '@fortawesome/free-solid-svg-icons/faStar';
-
-import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
+import {
+    fas, faCaretUp, faCaretDown, faStar, faCheck
+} from '@fortawesome/free-solid-svg-icons';
 
 // Add custom icons to fontawesome library
 library.add(fas, faCaretUp, faCaretDown, faStar, faCheck);

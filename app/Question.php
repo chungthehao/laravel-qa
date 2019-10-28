@@ -53,7 +53,7 @@ class Question extends Model
     // Khi đâu đó lấy thuộc tính url của đối tượng question
     // thì sẽ trả về link tới màn hình show của question đó
     public function getUrlAttribute() {
-        return route("questions.show", $this->slug);
+        return route("questions.show", $this->id . '-' . $this->slug);
     }
 
     // Mặc dù đn là CreatedDate nhưng lúc truy xuất thì chỉ
