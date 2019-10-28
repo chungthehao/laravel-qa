@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 
 class LoginController extends Controller
@@ -37,5 +38,11 @@ class LoginController extends Controller
         $response = Route::dispatch($requestToken);
 
         return $response;
+    }
+
+    public function destroy(Request $request)
+    {
+        $request->user()->token()->revoke();
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
