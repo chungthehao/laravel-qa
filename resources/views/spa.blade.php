@@ -74,7 +74,7 @@
     </nav>
 
     <main class="py-4">
-        <h1>Content here.</h1>
+        <router-view></router-view>
     </main>
 </div>
 
