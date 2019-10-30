@@ -16,7 +16,10 @@ const routes = [
     {
         path: '/my-posts',
         component: MyPostsPage, // ~ blade view in Laravel
-        name: 'my-posts' // ~ route's name in Laravel
+        name: 'my-posts', // ~ route's name in Laravel
+        meta: {
+            requiresAuth: true // https://router.vuejs.org/guide/advanced/meta.html
+        }
     },
     {
         path: '/questions/:slug', // ~ {slug} in Laravel

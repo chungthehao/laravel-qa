@@ -65877,6 +65877,20 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     linkActiveClass: 'active' // https://router.vuejs.org/api/#active-class
 });
 
+// https://router.vuejs.org/guide/advanced/navigation-guards.html#global-before-guards
+router.beforeEach(function (to, from, next) {
+    // https://router.vuejs.org/guide/advanced/meta.html
+    // https://router.vuejs.org/guide/advanced/navigation-guards.html#the-full-navigation-resolution-flow
+    if (to.matched.some(function (record) {
+        return record.meta.requiresAuth;
+    }) && !window.Auth.signedIn) {
+        window.location = window.Auth.url;
+        return;
+    }
+
+    next(); // make sure to always call next()!
+});
+
 /* harmony default export */ __webpack_exports__["a"] = (router);
 
 /***/ }),
@@ -68794,7 +68808,10 @@ var routes = [{
 }, {
     path: '/my-posts',
     component: __WEBPACK_IMPORTED_MODULE_2__pages_MyPostsPage___default.a, // ~ blade view in Laravel
-    name: 'my-posts' // ~ route's name in Laravel
+    name: 'my-posts', // ~ route's name in Laravel
+    meta: {
+        requiresAuth: true // https://router.vuejs.org/guide/advanced/meta.html
+    }
 }, {
     path: '/questions/:slug', // ~ {slug} in Laravel
     component: __WEBPACK_IMPORTED_MODULE_1__pages_QuestionPage___default.a, // ~ blade view in Laravel

@@ -39,7 +39,7 @@
 
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
-                    {{-- https://router.vuejs.org/api/#tag --}}
+                    {{-- https://router.vuejs.org/api/#applying-active-class-to-outer-element --}}
                     <router-link tag="li" class="nav-item" :to="{ name: 'questions' }">
                         <a class="nav-link">Questions</a>
                     </router-link>
@@ -90,7 +90,11 @@
 <!-- Scripts -->
 <script>
     // Luu toan cuc o bien window cua browser
-    var authObj = {!! json_encode(['signedIn' => Auth::check(), 'user' => Auth::user()]) !!};
+    var authObj = {!! json_encode([
+        'signedIn' => Auth::check(),
+        'user' => Auth::user(),
+        'url' => route('login'),
+    ]) !!};
     window.Auth = authObj;
 
     // Luu them o localStorage
