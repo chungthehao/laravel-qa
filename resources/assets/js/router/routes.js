@@ -1,6 +1,7 @@
 import QuestionsPage from '../pages/QuestionsPage';
 import QuestionPage from '../pages/QuestionPage';
 import MyPostsPage from '../pages/MyPostsPage';
+import NotFoundPage from '../pages/NotFoundPage';
 
 const routes = [
     {
@@ -26,6 +27,12 @@ const routes = [
         component: QuestionPage, // ~ blade view in Laravel
         name: 'questions.show' // ~ route's name in Laravel
     },
+    {
+        path: '*',
+        component: NotFoundPage, // ~ blade view in Laravel
+        name: 'not-found' // ~ route's name in Laravel
+    },
+
 ];
 
 export default routes;
