@@ -65873,7 +65873,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     mode: 'history',
-    routes: __WEBPACK_IMPORTED_MODULE_2__routes__["a" /* default */]
+    routes: __WEBPACK_IMPORTED_MODULE_2__routes__["a" /* default */],
+    linkActiveClass: 'active' // https://router.vuejs.org/api/#active-class
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (router);

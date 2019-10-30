@@ -22,9 +22,9 @@
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
+            <router-link class="navbar-brand" :to="{ name: 'home' }">
                 {{ config('app.name', 'Laravel') }}
-            </a>
+            </router-link>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="{{ __('Toggle navigation') }}">
@@ -39,6 +39,15 @@
 
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
+                    {{-- https://router.vuejs.org/api/#tag --}}
+                    <router-link tag="li" class="nav-item" :to="{ name: 'questions' }">
+                        <a class="nav-link">Questions</a>
+                    </router-link>
+
+                    <router-link tag="li" class="nav-item" :to="{ name: 'my-posts' }">
+                        <a class="nav-link">My Posts</a>
+                    </router-link>
+
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
