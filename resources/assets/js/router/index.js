@@ -16,7 +16,7 @@ router.beforeEach((to, from, next) => {
     // https://router.vuejs.org/guide/advanced/meta.html
     // https://router.vuejs.org/guide/advanced/navigation-guards.html#the-full-navigation-resolution-flow
     if (to.matched.some(record => record.meta.requiresAuth) && !window.Auth.signedIn) {
-        window.location = window.Auth.url;
+        window.location = window.Urls.login;
         return;
     }
 

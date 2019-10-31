@@ -93,9 +93,14 @@
     var authObj = {!! json_encode([
         'signedIn' => Auth::check(),
         'user' => Auth::user(),
-        'url' => route('login'),
     ]) !!};
     window.Auth = authObj;
+
+    // Khi PHP echo ra chuỗi json này vô tới browser sẽ hiểu là 1 object (vì ngoài cùng là 2 dấu {})
+    window.Urls = {!! json_encode([
+        'login' => route('login'),
+        'api' => url('/api'),
+    ]) !!};
 
     // Luu them o localStorage
     localStorage.setItem('authInfo', JSON.stringify(authObj));
