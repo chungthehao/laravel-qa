@@ -68886,29 +68886,12 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _vm.questions.length
-              ? _c(
-                  "div",
-                  _vm._l(_vm.questions, function(question) {
-                    return _c("question-excerpt", {
-                      key: question.id,
-                      attrs: { question: question }
-                    })
-                  }),
-                  1
-                )
-              : _c("div", { staticClass: "alert alert-warning text-center" }, [
-                  _c("strong", [_vm._v("Sorry!")]),
-                  _vm._v(
-                    " There are no questions available.\n                    "
-                  )
-                ])
-          ])
-        ])
+        _c(
+          "div",
+          { staticClass: "card" },
+          [_vm._m(0), _vm._v(" "), _c("questions")],
+          1
+        )
       ])
     ])
   ])
@@ -79508,22 +79491,8 @@ if (false) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_QuestionExcerpt_vue__ = __webpack_require__(233);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_QuestionExcerpt_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_QuestionExcerpt_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Questions_vue__ = __webpack_require__(236);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Questions_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_Questions_vue__);
 //
 //
 //
@@ -79549,27 +79518,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    components: { QuestionExcerpt: __WEBPACK_IMPORTED_MODULE_0__components_QuestionExcerpt_vue___default.a },
-    data: function data() {
-        return {
-            questions: []
-        };
-    },
-    mounted: function mounted() {
-        this.fetchQuestions();
-    },
+    components: { Questions: __WEBPACK_IMPORTED_MODULE_0__components_Questions_vue___default.a }
 
-    methods: {
-        fetchQuestions: function fetchQuestions() {
-            var _this = this;
-
-            axios.get('/questions').then(function (res) {
-                _this.questions = res.data.data;
-            }).catch(function (err) {
-                return console.log(err.response.data);
-            });
-        }
-    }
 });
 
 /***/ }),
@@ -79794,6 +79744,330 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-3065af58", module.exports)
   }
 }
+
+/***/ }),
+/* 236 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(237)
+/* template */
+var __vue_template__ = __webpack_require__(238)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Questions.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0cb392a6", Component.options)
+  } else {
+    hotAPI.reload("data-v-0cb392a6", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 237 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__QuestionExcerpt_vue__ = __webpack_require__(233);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__QuestionExcerpt_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__QuestionExcerpt_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Pagination_vue__ = __webpack_require__(239);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Pagination_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Pagination_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: { QuestionExcerpt: __WEBPACK_IMPORTED_MODULE_0__QuestionExcerpt_vue___default.a, Pagination: __WEBPACK_IMPORTED_MODULE_1__Pagination_vue___default.a },
+    data: function data() {
+        return {
+            questions: [],
+            links: {},
+            meta: {}
+        };
+    },
+    mounted: function mounted() {
+        this.fetchQuestions();
+    },
+
+    watch: {
+        '$route': 'fetchQuestions'
+    },
+    methods: {
+        fetchQuestions: function fetchQuestions() {
+            var _this = this;
+
+            axios.get('/questions', { params: this.$route.query }).then(function (res) {
+                var _res$data = res.data,
+                    data = _res$data.data,
+                    links = _res$data.links,
+                    meta = _res$data.meta;
+
+                _this.questions = data;
+                _this.links = links;
+                _this.meta = meta;
+            }).catch(function (err) {
+                return console.log(err.response.data);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 238 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "card-body" }, [
+      _vm.questions.length
+        ? _c(
+            "div",
+            _vm._l(_vm.questions, function(question) {
+              return _c("question-excerpt", {
+                key: question.id,
+                attrs: { question: question }
+              })
+            }),
+            1
+          )
+        : _c("div", { staticClass: "alert alert-warning text-center" }, [
+            _c("strong", [_vm._v("Sorry!")]),
+            _vm._v(" There are no questions available.\n        ")
+          ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "card-footer" },
+      [_c("pagination", { attrs: { links: _vm.links, meta: _vm.meta } })],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0cb392a6", module.exports)
+  }
+}
+
+/***/ }),
+/* 239 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(241)
+/* template */
+var __vue_template__ = __webpack_require__(240)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Pagination.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3895afde", Component.options)
+  } else {
+    hotAPI.reload("data-v-3895afde", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 240 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row align-items-center" }, [
+    _c("div", { staticClass: "col" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-secondary",
+          attrs: { disabled: _vm.isFirst },
+          on: { click: _vm.prev }
+        },
+        [_vm._v("Newer")]
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col text-center" }, [
+      _vm._v(
+        "\n        Page " +
+          _vm._s(_vm.meta.current_page) +
+          " of " +
+          _vm._s(_vm.meta.last_page) +
+          "\n    "
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col text-right" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-secondary",
+          attrs: { disabled: _vm.isLast },
+          on: { click: _vm.next }
+        },
+        [_vm._v("Older")]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3895afde", module.exports)
+  }
+}
+
+/***/ }),
+/* 241 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['links', 'meta'],
+    computed: {
+        isFirst: function isFirst() {
+            return this.meta.current_page === 1;
+        },
+        isLast: function isLast() {
+            return this.meta.current_page === this.meta.last_page;
+        }
+    },
+    methods: {
+        next: function next() {
+            if (!this.isLast) this.meta.current_page++;
+            this.switchPage();
+        },
+        prev: function prev() {
+            if (!this.isFirst) this.meta.current_page--;
+            this.switchPage();
+        },
+        switchPage: function switchPage() {
+            this.$router.push({
+                name: 'questions',
+                query: { page: this.meta.current_page }
+            });
+        }
+    }
+});
 
 /***/ })
 /******/ ]);
