@@ -79740,7 +79740,7 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          _vm.authorize("deleteQuestion", _vm.questions)
+          _vm.authorize("deleteQuestion", _vm.question)
             ? _c(
                 "form",
                 {

@@ -20,7 +20,7 @@
                        href="#route('questions.edit', question.id)"
                        class="btn btn-sm btn-outline-info">Edit</a>
 
-                    <form v-if="authorize('deleteQuestion', questions)"
+                    <form v-if="authorize('deleteQuestion', question)"
                           class="d-inline"
                           action="#route('questions.destroy', question.id)"
                           method="post">
