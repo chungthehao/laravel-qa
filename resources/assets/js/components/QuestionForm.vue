@@ -16,12 +16,15 @@
         </div>
         <div class="form-group">
             <label for="question-body">Content</label>
-            <textarea class="form-control" :class="errorClass('body')"
-                      id="question-body" rows="10" v-model="body"></textarea>
 
-            <div v-if="errors['body']" class="invalid-feedback">
-                <strong>{{ errors['body'][0] }}</strong>
-            </div>
+            <m-editor :body="body" name="add-question">
+                <textarea class="form-control" :class="errorClass('body')"
+                          id="question-body" rows="10" v-model="body"></textarea>
+
+                <div v-if="errors['body']" class="invalid-feedback">
+                    <strong>{{ errors['body'][0] }}</strong>
+                </div>
+            </m-editor>
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-outline-primary btn-lg btn-block">{{ submitButtonText }}</button>
@@ -30,18 +33,22 @@
 </template>
 
 <script>
+import MEditor from '../components/MEditor';
+import EventBus from '../event-bus';
+
 export default {
+    components: { MEditor },
     data() {
         return {
             title: '',
             body: '',
 
             // https://vuejs.org/v2/guide/list.html#Object-Change-Detection-Caveats
-            errors: {
-                title: [],
-                body: []
-            }
+            errors: { title: [], body: [] }
         }
+    },
+    mounted() {
+        EventBus.$on('error', errors => this.errors = errors);
     },
     computed: {
         submitButtonText() {
@@ -50,7 +57,10 @@ export default {
     },
     methods: {
         handleSubmit() {
-
+            this.$emit('submitted', {
+                title: this.title,
+                body: this.body
+            });
         },
         errorClass(field) {
             if (this.errors[field]) {

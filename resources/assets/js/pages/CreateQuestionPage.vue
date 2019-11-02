@@ -16,7 +16,7 @@
                     </div>
 
                     <div class="card-body">
-                        <question-form></question-form>
+                        <question-form @submitted="handleSubmitted"></question-form>
                     </div>
                 </div>
             </div>
@@ -26,11 +26,25 @@
 
 <script>
 import QuestionForm from '../components/QuestionForm';
+import EventBus from '../event-bus';
 
 export default {
     components: { QuestionForm },
     methods: {
-
+        handleSubmitted(data) {
+            // Ko cần truyền: Authorization -> Bearer gì gì. (Nhờ CreateFreshApiToken middleware)
+            // Ko cần /api/questions (Nhờ window.axios.defaults.baseURL = window.Urls.api || 'http://localhost:8000/api';)
+            axios.post('/questions/', data).then(res => {
+                const { data: { message, question } } = res;
+                this.$router.push({ name: 'questions' }); // Redirect back to all questions
+                this.$toast.success(message, 'Success');
+            }).catch(({ response: { data: { errors } } }) => {
+                //console.error(errors);
+                if (errors) {
+                    EventBus.$emit('error', errors);
+                }
+            });
+        }
     }
 }
 </script>

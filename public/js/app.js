@@ -80136,6 +80136,7 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_QuestionForm__ = __webpack_require__(245);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_QuestionForm___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_QuestionForm__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__event_bus__ = __webpack_require__(126);
 //
 //
 //
@@ -80162,12 +80163,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: { QuestionForm: __WEBPACK_IMPORTED_MODULE_0__components_QuestionForm___default.a },
-    methods: {}
+    methods: {
+        handleSubmitted: function handleSubmitted(data) {
+            var _this = this;
+
+            // Ko cần truyền: Authorization -> Bearer gì gì. (Nhờ CreateFreshApiToken middleware)
+            // Ko cần /api/questions (Nhờ window.axios.defaults.baseURL = window.Urls.api || 'http://localhost:8000/api';)
+            axios.post('/questions/', data).then(function (res) {
+                var _res$data = res.data,
+                    message = _res$data.message,
+                    question = _res$data.question;
+
+                _this.$router.push({ name: 'questions' }); // Redirect back to all questions
+                _this.$toast.success(message, 'Success');
+            }).catch(function (_ref) {
+                var errors = _ref.response.data.errors;
+
+                //console.error(errors);
+                if (errors) {
+                    __WEBPACK_IMPORTED_MODULE_1__event_bus__["a" /* default */].$emit('error', errors);
+                }
+            });
+        }
+    }
 });
 
 /***/ }),
@@ -80204,7 +80228,12 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [_c("question-form")], 1)
+          _c(
+            "div",
+            { staticClass: "card-body" },
+            [_c("question-form", { on: { submitted: _vm.handleSubmitted } })],
+            1
+          )
         ])
       ])
     ])
@@ -80273,6 +80302,12 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_MEditor__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_MEditor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_MEditor__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__event_bus__ = __webpack_require__(126);
+//
+//
+//
 //
 //
 //
@@ -80305,18 +80340,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+    components: { MEditor: __WEBPACK_IMPORTED_MODULE_0__components_MEditor___default.a },
     data: function data() {
         return {
             title: '',
             body: '',
 
             // https://vuejs.org/v2/guide/list.html#Object-Change-Detection-Caveats
-            errors: {
-                title: [],
-                body: []
-            }
+            errors: { title: [], body: [] }
         };
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        __WEBPACK_IMPORTED_MODULE_1__event_bus__["a" /* default */].$on('error', function (errors) {
+            return _this.errors = errors;
+        });
     },
 
     computed: {
@@ -80325,7 +80368,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
-        handleSubmit: function handleSubmit() {},
+        handleSubmit: function handleSubmit() {
+            this.$emit('submitted', {
+                title: this.title,
+                body: this.body
+            });
+        },
         errorClass: function errorClass(field) {
             if (this.errors[field]) {
                 return this.errors[field][0] ? 'is-invalid' : '';
@@ -80388,38 +80436,45 @@ var render = function() {
           : _vm._e()
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "question-body" } }, [_vm._v("Content")]),
-        _vm._v(" "),
-        _c("textarea", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.body,
-              expression: "body"
-            }
-          ],
-          staticClass: "form-control",
-          class: _vm.errorClass("body"),
-          attrs: { id: "question-body", rows: "10" },
-          domProps: { value: _vm.body },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+      _c(
+        "div",
+        { staticClass: "form-group" },
+        [
+          _c("label", { attrs: { for: "question-body" } }, [_vm._v("Content")]),
+          _vm._v(" "),
+          _c("m-editor", { attrs: { body: _vm.body, name: "add-question" } }, [
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.body,
+                  expression: "body"
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.errorClass("body"),
+              attrs: { id: "question-body", rows: "10" },
+              domProps: { value: _vm.body },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.body = $event.target.value
+                }
               }
-              _vm.body = $event.target.value
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm.errors["body"]
-          ? _c("div", { staticClass: "invalid-feedback" }, [
-              _c("strong", [_vm._v(_vm._s(_vm.errors["body"][0]))])
-            ])
-          : _vm._e()
-      ]),
+            }),
+            _vm._v(" "),
+            _vm.errors["body"]
+              ? _c("div", { staticClass: "invalid-feedback" }, [
+                  _c("strong", [_vm._v(_vm._s(_vm.errors["body"][0]))])
+                ])
+              : _vm._e()
+          ])
+        ],
+        1
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "form-group" }, [
         _c(
