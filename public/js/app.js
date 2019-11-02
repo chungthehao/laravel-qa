@@ -68890,11 +68890,14 @@ var render = function() {
           _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
-            _vm.questions.length > 0
+            _vm.questions.length
               ? _c(
                   "div",
                   _vm._l(_vm.questions, function(question) {
-                    return _c("question-excerpt", { key: question.id })
+                    return _c("question-excerpt", {
+                      key: question.id,
+                      attrs: { question: question }
+                    })
                   }),
                   1
                 )
@@ -79551,6 +79554,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             questions: []
         };
+    },
+    mounted: function mounted() {
+        this.fetchQuestions();
+    },
+
+    methods: {
+        fetchQuestions: function fetchQuestions() {
+            var _this = this;
+
+            axios.get('/questions').then(function (res) {
+                _this.questions = res.data.data;
+            }).catch(function (err) {
+                return console.log(err.response.data);
+            });
+        }
     }
 });
 
@@ -79653,6 +79671,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['question'],
+
     methods: {
         str_plural: function str_plural(str, quantity) {
             return str + (quantity > 1 ? 's' : '');

@@ -15,8 +15,9 @@
                     <div class="card-body">
                         <!--@include('layouts._messages')-->
 
-                        <div v-if="questions.length > 0">
+                        <div v-if="questions.length">
                             <question-excerpt v-for="question in questions"
+                                              :question="question"
                                               :key="question.id"></question-excerpt>
                         </div>
 
@@ -25,7 +26,6 @@
                         </div>
 
                         <!-- Pagination goes here. -->
-
                     </div>
                 </div>
             </div>
@@ -41,6 +41,16 @@ export default {
     data() {
         return {
             questions: []
+        }
+    },
+    mounted() {
+        this.fetchQuestions();
+    },
+    methods: {
+        fetchQuestions() {
+            axios.get('/questions').then(res => {
+                this.questions = res.data.data;
+            }).catch(err => console.log(err.response.data));
         }
     }
 }

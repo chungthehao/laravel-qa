@@ -44,6 +44,7 @@
 <script>
 export default {
     props: ['question'],
+
     methods: {
         str_plural(str, quantity) {
             return str + (quantity > 1 ? 's' : '');
