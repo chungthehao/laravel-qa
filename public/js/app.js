@@ -65846,13 +65846,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /* harmony default export */ __webpack_exports__["a"] = ({
     modify: function modify(currentUser, model) {
         // model: question / answer
-        return currentUser.id === model.user_id;
+        return currentUser.id === model.user.id;
     },
     accept: function accept(currentUser, answer) {
-        return currentUser.id === answer.question.user_id;
+        return currentUser.id === answer.question.user.id;
     },
     deleteQuestion: function deleteQuestion(currentUser, question) {
-        return currentUser.id === question.user_id && question.answers_count < 1;
+        return currentUser.id === question.user.id && question.answers_count < 1;
     }
 });
 

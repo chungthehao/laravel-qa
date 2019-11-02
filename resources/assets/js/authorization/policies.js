@@ -1,13 +1,13 @@
 export default {
     modify(currentUser, model) { // model: question / answer
-        return currentUser.id === model.user_id;
+        return currentUser.id === model.user.id;
     },
 
     accept(currentUser, answer) {
-        return currentUser.id === answer.question.user_id;
+        return currentUser.id === answer.question.user.id;
     },
 
     deleteQuestion(currentUser, question) {
-        return currentUser.id === question.user_id && question.answers_count < 1;
+        return currentUser.id === question.user.id && question.answers_count < 1;
     }
 }
