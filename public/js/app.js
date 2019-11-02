@@ -68835,7 +68835,7 @@ var routes = [{
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(232)
 /* template */
 var __vue_template__ = __webpack_require__(115)
 /* template functional */
@@ -68883,9 +68883,56 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("h1", [_vm._v("Questions page")])
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _vm.questions.length > 0
+              ? _c(
+                  "div",
+                  _vm._l(_vm.questions, function(question) {
+                    return _c("question-excerpt", { key: question.id })
+                  }),
+                  1
+                )
+              : _c("div", { staticClass: "alert alert-warning text-center" }, [
+                  _c("strong", [_vm._v("Sorry!")]),
+                  _vm._v(
+                    " There are no questions available.\n                    "
+                  )
+                ])
+          ])
+        ])
+      ])
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("div", { staticClass: "d-flex align-items-center" }, [
+        _c("h2", { staticClass: "mb-0" }, [_vm._v("All Questions")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "ml-auto" }, [
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-outline-secondary",
+              attrs: { href: "#route('questions.create')" }
+            },
+            [_vm._v("Ask Question")]
+          )
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -79448,6 +79495,286 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_QuestionExcerpt_vue__ = __webpack_require__(233);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_QuestionExcerpt_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_QuestionExcerpt_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: { QuestionExcerpt: __WEBPACK_IMPORTED_MODULE_0__components_QuestionExcerpt_vue___default.a },
+    data: function data() {
+        return {
+            questions: []
+        };
+    }
+});
+
+/***/ }),
+/* 233 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(234)
+/* template */
+var __vue_template__ = __webpack_require__(235)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/QuestionExcerpt.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3065af58", Component.options)
+  } else {
+    hotAPI.reload("data-v-3065af58", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 234 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['question'],
+    methods: {
+        str_plural: function str_plural(str, quantity) {
+            return str + (quantity > 1 ? 's' : '');
+        }
+    }
+});
+
+/***/ }),
+/* 235 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "media post" }, [
+    _c("div", { staticClass: "d-flex flex-column counters mr-5 text-center" }, [
+      _c("div", { staticClass: "vote" }, [
+        _c("strong", [_vm._v(_vm._s(_vm.question.votes_count))]),
+        _vm._v(
+          " " +
+            _vm._s(_vm.str_plural("vote", _vm.question.votes_count)) +
+            "\n        "
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { class: ["answer", "status", _vm.question.status] }, [
+        _c("strong", [_vm._v(_vm._s(_vm.question.answers_count))]),
+        _vm._v(
+          " " +
+            _vm._s(_vm.str_plural("answer", _vm.question.answers_count)) +
+            "\n        "
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "view mt-3" }, [
+        _vm._v(
+          "\n            " +
+            _vm._s(
+              _vm.question.views +
+                " " +
+                _vm.str_plural("view", _vm.question.views)
+            ) +
+            "\n        "
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "media-body" }, [
+      _c("div", { staticClass: "d-flex align-items-center" }, [
+        _c("h3", { staticClass: "mt-0" }, [
+          _c("a", { attrs: { href: "#question.url" } }, [
+            _vm._v(_vm._s(_vm.question.title))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "ml-auto" }, [
+          _vm.authorize("modify", _vm.question)
+            ? _c(
+                "a",
+                {
+                  staticClass: "btn btn-sm btn-outline-info",
+                  attrs: { href: "#route('questions.edit', question.id)" }
+                },
+                [_vm._v("Edit")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.authorize("deleteQuestion", _vm.questions)
+            ? _c(
+                "form",
+                {
+                  staticClass: "d-inline",
+                  attrs: {
+                    action: "#route('questions.destroy', question.id)",
+                    method: "post"
+                  }
+                },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-danger btn-sm",
+                      attrs: {
+                        type: "submit",
+                        onclick: "return window.confirm('Are you sure?');"
+                      }
+                    },
+                    [_vm._v("Delete")]
+                  )
+                ]
+              )
+            : _vm._e()
+        ])
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "lead" }, [
+        _vm._v("\n            Asked by "),
+        _c("a", { attrs: { href: "#question.user.url" } }, [
+          _vm._v(_vm._s(_vm.question.user.name))
+        ]),
+        _vm._v(" "),
+        _c("small", { staticClass: "text-muted" }, [
+          _vm._v(_vm._s(_vm.question.created_date))
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "excerpt" }, [
+        _vm._v("\n            " + _vm._s(_vm.question.excerpt) + "\n        ")
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3065af58", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
