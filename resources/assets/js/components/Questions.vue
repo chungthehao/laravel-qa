@@ -4,7 +4,8 @@
             <!--@include('layouts._messages')-->
 
             <div v-if="questions.length">
-                <question-excerpt v-for="question in questions"
+                <question-excerpt v-for="(question, idx) in questions"
+                                  @deleted="remove(idx)"
                                   :question="question"
                                   :key="question.id"></question-excerpt>
             </div>
@@ -48,6 +49,10 @@ export default {
                 this.links = links;
                 this.meta = meta;
             }).catch(err => console.log(err.response.data));
+        },
+        remove(idx) {
+            this.questions.splice(idx, 1);
+            this.count--;
         }
     }
 }

@@ -23,14 +23,9 @@
                        :to="{ name: 'questions.edit', params: { id: question.id } }"
                        class="btn btn-sm btn-outline-info">Edit</router-link>
 
-                    <form v-if="authorize('deleteQuestion', question)"
-                          class="d-inline"
-                          action="#route('questions.destroy', question.id)"
-                          method="post">
-                        <!--@csrf-->
-                        <!--@method('delete')-->
-                        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return window.confirm('Are you sure?');">Delete</button>
-                    </form>
+                    <button v-if="authorize('deleteQuestion', question)"
+                            class="btn btn-outline-danger btn-sm"
+                            @click="destroy">Delete</button>
                 </div>
             </div>
             <p class="lead">
@@ -45,12 +40,28 @@
 </template>
 
 <script>
+import destroy from '../mixins/destroy';
+
 export default {
+    mixins: [destroy],
+
     props: ['question'],
 
     methods: {
         str_plural(str, quantity) {
             return str + (quantity > 1 ? 's' : '');
+        },
+
+        // Re-define (override) the delete method
+        delete() {
+            axios.delete('/questions/' + this.question.id).then(res => {
+                const { message } = res.data;
+                this.$toast.success(message, 'Success');
+                this.$emit('deleted');
+            }).catch(err => {
+                const { data } = err.response;
+                console.error(data);
+            });
         }
     }
 }

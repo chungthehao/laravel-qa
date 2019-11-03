@@ -15785,6 +15785,7 @@ module.exports = Component.exports
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_MEditor_vue__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_MEditor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_MEditor_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__highlight__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__destroy__ = __webpack_require__(251);
 /* Làm Mixin để xài chung ở Question.vue và Answer.vue */
 
 
@@ -15792,8 +15793,9 @@ module.exports = Component.exports
 
 
 
+
 /* harmony default export */ __webpack_exports__["a"] = ({
-    mixins: [__WEBPACK_IMPORTED_MODULE_3__highlight__["a" /* default */]],
+    mixins: [__WEBPACK_IMPORTED_MODULE_3__highlight__["a" /* default */], __WEBPACK_IMPORTED_MODULE_4__destroy__["a" /* default */]],
 
     components: { Vote: __WEBPACK_IMPORTED_MODULE_0__components_Vote_vue___default.a, UserInfo: __WEBPACK_IMPORTED_MODULE_1__components_UserInfo_vue___default.a, MEditor: __WEBPACK_IMPORTED_MODULE_2__components_MEditor_vue___default.a },
 
@@ -15841,35 +15843,12 @@ module.exports = Component.exports
                 return _this.highlight();
             });
         },
-        destroy: function destroy() {
-            var _this2 = this;
-
-            this.$toast.question('Are you sure about that?', 'Confirmation', {
-                timeout: 20000,
-                close: false,
-                overlay: true,
-                displayMode: 'once',
-                id: 'question',
-                zindex: 999,
-                title: 'Hey',
-                position: 'center',
-                buttons: [['<button><b>YES</b></button>', function (instance, toast) {
-                    _this2.delete();
-
-                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-                }, true], ['<button>NO</button>', function (instance, toast) {
-
-                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-                }]]
-            });
-        },
 
 
         /* Những methods phải define ở chỗ xài mixin này */
         setEditCache: function setEditCache() {},
         restoreFromCache: function restoreFromCache() {},
-        payload: function payload() {},
-        delete: function _delete() {}
+        payload: function payload() {}
     }
 });
 
@@ -79594,11 +79573,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_destroy__ = __webpack_require__(251);
 //
 //
 //
@@ -79641,12 +79616,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_destroy__["a" /* default */]],
+
     props: ['question'],
 
     methods: {
         str_plural: function str_plural(str, quantity) {
             return str + (quantity > 1 ? 's' : '');
+        },
+
+
+        // Re-define (override) the delete method
+        delete: function _delete() {
+            var _this = this;
+
+            axios.delete('/questions/' + this.question.id).then(function (res) {
+                var message = res.data.message;
+
+                _this.$toast.success(message, 'Success');
+                _this.$emit('deleted');
+            }).catch(function (err) {
+                var data = err.response.data;
+
+                console.error(data);
+            });
         }
     }
 });
@@ -79722,27 +79718,12 @@ var render = function() {
             _vm._v(" "),
             _vm.authorize("deleteQuestion", _vm.question)
               ? _c(
-                  "form",
+                  "button",
                   {
-                    staticClass: "d-inline",
-                    attrs: {
-                      action: "#route('questions.destroy', question.id)",
-                      method: "post"
-                    }
+                    staticClass: "btn btn-outline-danger btn-sm",
+                    on: { click: _vm.destroy }
                   },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-outline-danger btn-sm",
-                        attrs: {
-                          type: "submit",
-                          onclick: "return window.confirm('Are you sure?');"
-                        }
-                      },
-                      [_vm._v("Delete")]
-                    )
-                  ]
+                  [_vm._v("Delete")]
                 )
               : _vm._e()
           ],
@@ -79857,6 +79838,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -79893,6 +79875,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (err) {
                 return console.log(err.response.data);
             });
+        },
+        remove: function remove(idx) {
+            this.questions.splice(idx, 1);
+            this.count--;
         }
     }
 });
@@ -79910,10 +79896,15 @@ var render = function() {
       _vm.questions.length
         ? _c(
             "div",
-            _vm._l(_vm.questions, function(question) {
+            _vm._l(_vm.questions, function(question, idx) {
               return _c("question-excerpt", {
                 key: question.id,
-                attrs: { question: question }
+                attrs: { question: question },
+                on: {
+                  deleted: function($event) {
+                    return _vm.remove(idx)
+                  }
+                }
               })
             }),
             1
@@ -80717,6 +80708,42 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-1dc43d7c", module.exports)
   }
 }
+
+/***/ }),
+/* 251 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+    methods: {
+        destroy: function destroy() {
+            var _this = this;
+
+            this.$toast.question('Are you sure about that?', 'Confirmation', {
+                timeout: 20000,
+                close: false,
+                overlay: true,
+                displayMode: 'once',
+                id: 'question',
+                zindex: 999,
+                title: 'Hey',
+                position: 'center',
+                buttons: [['<button><b>YES</b></button>', function (instance, toast) {
+                    _this.delete();
+
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                }, true], ['<button>NO</button>', function (instance, toast) {
+
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                }]]
+            });
+        },
+
+
+        /* Những methods phải define ở chỗ xài mixin này (Các components, các file .vue) */
+        delete: function _delete() {}
+    }
+});
 
 /***/ })
 /******/ ]);
