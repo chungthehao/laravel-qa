@@ -37,7 +37,11 @@ const routes = [
     {
         path: '/questions/:slug', // ~ {slug} in Laravel
         component: QuestionPage, // ~ blade view in Laravel
-        name: 'questions.show' // ~ route's name in Laravel
+        name: 'questions.show', // ~ route's name in Laravel
+
+        // - Cái slug ở trên URL sẽ truyền thành props cho QuestionPage
+        // - Khỏi cần lấy bằng cách: this.$route.params.slug
+        props: true
     },
     {
         path: '*',

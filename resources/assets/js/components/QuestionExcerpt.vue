@@ -14,11 +14,13 @@
 
         <div class="media-body">
             <div class="d-flex align-items-center">
-                <h3 class="mt-0"><a href="#question.url">{{ question.title }}</a></h3>
+                <h3 class="mt-0">
+                    <router-link :to="{ name: 'questions.show', params: { slug: question.slug } }">
+                        {{ question.title }}
+                    </router-link>
+                </h3>
+
                 <div class="ml-auto">
-                    <!--<a v-if="authorize('modify', question)"-->
-                       <!--href="#route('questions.edit', question.id)"-->
-                       <!--class="btn btn-sm btn-outline-info">Edit</a>-->
                     <router-link v-if="authorize('modify', question)"
                        :to="{ name: 'questions.edit', params: { id: question.id } }"
                        class="btn btn-sm btn-outline-info">Edit</router-link>

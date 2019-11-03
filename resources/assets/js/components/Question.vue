@@ -25,7 +25,8 @@
                         <div class="d-flex align-items-center">
                             <h2 class="mb-0">{{ title }}</h2>
                             <div class="ml-auto">
-                                <a href="/questions" class="btn btn-outline-secondary">Go Back</a>
+                                <router-link :to="{ name: 'questions' }"
+                                             class="btn btn-outline-secondary">Go Back</router-link>
                             </div>
                         </div>
                     </div>
