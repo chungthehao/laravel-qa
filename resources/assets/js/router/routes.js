@@ -1,5 +1,6 @@
 import QuestionsPage from '../pages/QuestionsPage';
 import CreateQuestionPage from '../pages/CreateQuestionPage';
+import EditQuestionPage from '../pages/EditQuestionPage';
 import QuestionPage from '../pages/QuestionPage';
 import MyPostsPage from '../pages/MyPostsPage';
 import NotFoundPage from '../pages/NotFoundPage';
@@ -19,6 +20,11 @@ const routes = [
         path: '/questions/create',
         component: CreateQuestionPage, // ~ blade view in Laravel
         name: 'questions.create' // ~ route's name in Laravel
+    },
+    {
+        path: '/questions/:id/edit',
+        component: EditQuestionPage, // ~ blade view in Laravel
+        name: 'questions.edit' // ~ route's name in Laravel
     },
     {
         path: '/my-posts',

@@ -17,7 +17,7 @@
         <div class="form-group">
             <label for="question-body">Content</label>
 
-            <m-editor :body="body" name="add-question">
+            <m-editor :body="body" :name="isEdit ? 'edit-question' : 'add-question'">
                 <textarea class="form-control" :class="errorClass('body')"
                           id="question-body" rows="10" v-model="body"></textarea>
 
@@ -37,6 +37,9 @@ import MEditor from '../components/MEditor';
 import EventBus from '../event-bus';
 
 export default {
+    props: {
+        isEdit: { type: Boolean, default: false }
+    },
     components: { MEditor },
     data() {
         return {
@@ -49,10 +52,12 @@ export default {
     },
     mounted() {
         EventBus.$on('error', errors => this.errors = errors);
+
+        if (this.isEdit) this.fetchQuesion();
     },
     computed: {
         submitButtonText() {
-            return 'Ask This Question';
+            return this.isEdit ? 'Update This Question' : 'Ask This Question';
         }
     },
     methods: {
@@ -66,6 +71,15 @@ export default {
             if (this.errors[field]) {
                 return this.errors[field][0] ? 'is-invalid' : '';
             }
+        },
+        fetchQuesion() {
+            axios.get(`/questions/${this.$route.params.id}`).then(res => {
+                const { title, body } = res.data;
+                this.title = title;
+                this.body = body;
+            }).catch(err => {
+                console.error(err.response.data);
+            });
         }
     }
 }
