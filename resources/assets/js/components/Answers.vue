@@ -75,7 +75,7 @@
                     .get(endpoint)
                     .then(({ data }) => { // { data }: destructuring object property
                         this.answers.push(...data.data);
-                        this.nextUrl = data.next_page_url;
+                        this.nextUrl = data.links.next;
                         //console.log(data);
 
                         // this.$nextTick: Chờ VueJS render DOM xong mới làm.

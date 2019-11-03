@@ -8,7 +8,7 @@
         <!--<answers v-bind:answers="{{ $question->answers }}" v-bind:count="{{ $question->answers_count }}"></answers>-->
 
         <!-- Khi implement tính năng "Load more answers" -->
-        <!--<answers v-bind:question="question"></answers>-->
+        <answers v-bind:question="question"></answers>
 
         <!-- ĐÃ IMPLEMENT NewAnswer COMPONENT TRONG Answers COMPONENT -->
         <!--@include('answers._create', [-->

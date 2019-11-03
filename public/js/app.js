@@ -65924,7 +65924,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return currentUser.id === model.user.id;
     },
     accept: function accept(currentUser, answer) {
-        return currentUser.id === answer.question.user.id;
+        return currentUser.id === answer.question_user_id;
     },
     deleteQuestion: function deleteQuestion(currentUser, question) {
         return currentUser.id === question.user.id && question.answers_count < 1;
@@ -79932,7 +79932,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 var data = _ref.data;
                 // { data }: destructuring object property
                 (_answers = _this2.answers).push.apply(_answers, _toConsumableArray(data.data));
-                _this2.nextUrl = data.next_page_url;
+                _this2.nextUrl = data.links.next;
                 //console.log(data);
 
                 // this.$nextTick: Chờ VueJS render DOM xong mới làm.
@@ -80602,7 +80602,11 @@ var render = function() {
     ? _c(
         "div",
         { staticClass: "container" },
-        [_c("question", { attrs: { question: _vm.question } })],
+        [
+          _c("question", { attrs: { question: _vm.question } }),
+          _vm._v(" "),
+          _c("answers", { attrs: { question: _vm.question } })
+        ],
         1
       )
     : _vm._e()

@@ -4,7 +4,7 @@ export default {
     },
 
     accept(currentUser, answer) {
-        return currentUser.id === answer.question.user.id;
+        return currentUser.id === answer.question_user_id;
     },
 
     deleteQuestion(currentUser, question) {
