@@ -78763,6 +78763,7 @@ module.exports = Component.exports
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_modification__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__event_bus__ = __webpack_require__(6);
 //
 //
 //
@@ -78822,14 +78823,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_modification__["a" /* default */]],
-
     props: ['question'],
-
     data: function data() {
         return {
             title: this.question.title,
@@ -78840,7 +78840,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             beforeEditCache: {}
         };
     },
+    mounted: function mounted() {
+        var _this = this;
 
+        __WEBPACK_IMPORTED_MODULE_1__event_bus__["a" /* default */].$on('answers-count-changed', function (count) {
+            _this.question.answers_count = count;
+        });
+    },
 
     computed: {
         isInvalid: function isInvalid() {
@@ -78853,7 +78859,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return 'question-' + this.id;
         }
     },
-
     methods: {
         setEditCache: function setEditCache() {
             this.beforeEditCache = {
@@ -78872,17 +78877,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             };
         },
         delete: function _delete() {
-            var _this = this;
+            var _this2 = this;
 
             axios.delete(this.endpoint).then(function (_ref) {
                 var data = _ref.data;
 
-                _this.$toast.success(data.message, 'Success', { timeout: 2000 });
+                _this2.$toast.success(data.message, 'Success', { timeout: 2000 });
+                _this2.$router.push({ name: 'questions' });
             });
 
-            setTimeout(function () {
-                window.location.href = '/questions';
-            }, 3000);
+            /*setTimeout(() => {
+                // window.location.href = '/questions';
+                this.$router.push({ name: 'questions' });
+            } , 3000);*/
         }
     }
 });
@@ -79847,6 +79854,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__NewAnswer_vue__ = __webpack_require__(239);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__NewAnswer_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__NewAnswer_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_highlight__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__event_bus__ = __webpack_require__(6);
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 //
@@ -79885,11 +79893,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_highlight__["a" /* default */]],
-
     props: ['question'],
-
     data: function data() {
         return {
             questionId: this.question.id,
@@ -79905,7 +79912,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         this.fetch('/questions/' + this.questionId + '/answers');
     },
 
-
     methods: {
         add: function add(answer) {
             var _this = this;
@@ -79918,10 +79924,20 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             this.$nextTick(function () {
                 _this.highlight('answer-' + answer.id);
             });
+
+            // Để chuyển trạng thái có thể delete question hay ko?
+            if (this.count === 1) {
+                __WEBPACK_IMPORTED_MODULE_3__event_bus__["a" /* default */].$emit('answers-count-changed', this.count);
+            }
         },
         remove: function remove(index) {
             this.answers.splice(index, 1);
             this.count--;
+
+            // Để chuyển trạng thái có thể delete question hay ko?
+            if (this.count === 0) {
+                __WEBPACK_IMPORTED_MODULE_3__event_bus__["a" /* default */].$emit('answers-count-changed', this.count);
+            }
         },
         fetch: function fetch(endpoint) {
             var _this2 = this;

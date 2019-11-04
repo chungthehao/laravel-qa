@@ -59,12 +59,11 @@
 
 <script>
     import modification from '../mixins/modification';
+    import EventBus from '../event-bus';
 
     export default {
         mixins: [modification],
-
         props: ['question'],
-
         data() {
             return {
                 title: this.question.title,
@@ -75,21 +74,22 @@
                 beforeEditCache: {}
             };
         },
-
+        mounted() {
+            EventBus.$on('answers-count-changed', count => {
+                this.question.answers_count = count;
+            });
+        },
         computed: {
             isInvalid() {
                 return this.body.length < 1 || this.title.length < 1
             },
-
             endpoint() {
                 return `/questions/${this.id}`;
             },
-
             uniqueName() {
                 return `question-${this.id}`;
             }
         },
-
         methods: {
             setEditCache() {
                 this.beforeEditCache = {
@@ -97,29 +97,28 @@
                     body: this.body
                 };
             },
-
             restoreFromCache() {
                 this.title = this.beforeEditCache.title;
                 this.body = this.beforeEditCache.body;
             },
-
             payload() {
                 return {
                     title: this.title,
                     body: this.body
                 };
             },
-
             delete() {
                 axios
                     .delete(this.endpoint)
                     .then(({ data }) => {
                         this.$toast.success(data.message, 'Success', {timeout: 2000});
+                        this.$router.push({ name: 'questions' });
                     });
 
-                setTimeout(() => {
-                    window.location.href = '/questions';
-                } , 3000);
+                /*setTimeout(() => {
+                    // window.location.href = '/questions';
+                    this.$router.push({ name: 'questions' });
+                } , 3000);*/
             }
         }
     }
