@@ -78823,6 +78823,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -79704,7 +79705,7 @@ var render = function() {
                       "router-link",
                       {
                         staticClass: "btn btn-outline-secondary",
-                        attrs: { to: { name: "questions" } }
+                        attrs: { exact: "", to: { name: "questions" } }
                       },
                       [_vm._v("Go Back")]
                     )
