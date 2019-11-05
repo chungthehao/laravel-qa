@@ -80649,7 +80649,7 @@ function injectStyle (ssrContext) {
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(257)
 /* template */
 var __vue_template__ = __webpack_require__(256)
 /* template functional */
@@ -81101,122 +81101,138 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("div", { staticClass: "card text-center" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _c("ul", { staticClass: "nav nav-tabs card-header-tabs" }, [
-                _c("li", { staticClass: "nav-item" }, [
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "card text-center" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c("ul", { staticClass: "nav nav-tabs card-header-tabs" }, [
+              _c(
+                "li",
+                { staticClass: "nav-item" },
+                [
                   _c(
-                    "a",
-                    { staticClass: "nav-link active", attrs: { href: "#" } },
+                    "router-link",
+                    {
+                      staticClass: "nav-link",
+                      attrs: { to: { name: "my-posts" }, exact: "" }
+                    },
                     [_vm._v("All")]
                   )
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "nav-item" }, [
-                  _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-                    _vm._v("Questions")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "nav-item" }, [
-                  _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-                    _vm._v("Answers")
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c("ul", { staticClass: "list-group list-group-flush" }, [
-                _c("li", { staticClass: "list-group-item" }, [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col" }, [
-                      _c("span", { staticClass: "post-badge accepted" }, [
-                        _vm._v("Q")
-                      ]),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "ml-4 votes-count accepted" }, [
-                        _vm._v("10")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-9" }, [
-                      _vm._v(
-                        "\n                                    Lorem ipsum dolor sit amet\n                                "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col text-right" }, [
-                      _vm._v("Jun 6'15")
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "list-group-item" }, [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col" }, [
-                      _c("span", { staticClass: "post-badge accepted" }, [
-                        _vm._v("A")
-                      ]),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "ml-4 votes-count accepted" }, [
-                        _vm._v("36")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-9" }, [
-                      _vm._v(
-                        "\n                                    Lorem ipsum dolor sit amet\n                                "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col text-right" }, [
-                      _vm._v("Mar 9'15")
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "list-group-item" }, [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col" }, [
-                      _c("span", { staticClass: "post-badge accepted" }, [
-                        _vm._v("Q")
-                      ]),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "ml-4 votes-count accepted" }, [
-                        _vm._v("10")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-9" }, [
-                      _vm._v(
-                        "\n                                    Lorem ipsum dolor sit amet\n                                "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col text-right" }, [
-                      _vm._v("Nov 7'20")
-                    ])
-                  ])
-                ])
-              ])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "nav-item" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "nav-link",
+                      attrs: {
+                        to: { name: "my-posts", query: { type: "questions" } },
+                        exact: ""
+                      }
+                    },
+                    [_vm._v("Questions")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "nav-item" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "nav-link",
+                      attrs: {
+                        to: { name: "my-posts", query: { type: "answers" } },
+                        exact: ""
+                      }
+                    },
+                    [_vm._v("Answers")]
+                  )
+                ],
+                1
+              )
             ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _vm.posts.length
+              ? _c(
+                  "ul",
+                  { staticClass: "list-group list-group-flush" },
+                  _vm._l(_vm.posts, function(post, idx) {
+                    return _c(
+                      "li",
+                      { key: post.id, staticClass: "list-group-item" },
+                      [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col" }, [
+                            _c(
+                              "span",
+                              {
+                                staticClass: "post-badge",
+                                class: { accepted: post.accepted }
+                              },
+                              [_vm._v(_vm._s(post.type))]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass: "ml-4 votes-count",
+                                class: { accepted: post.accepted }
+                              },
+                              [_vm._v(_vm._s(post.votes_count))]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-9 text-left" }, [
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(post.question_title) +
+                                "\n                                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col text-right" }, [
+                            _vm._v(_vm._s(post.created_at))
+                          ])
+                        ])
+                      ]
+                    )
+                  }),
+                  0
+                )
+              : _c("div", { staticClass: "alert alert-warning" }, [
+                  _c("p", [_vm._v("You have no any questions or answers.")]),
+                  _vm._v(" "),
+                  _c(
+                    "p",
+                    [
+                      _c(
+                        "router-link",
+                        { attrs: { to: { name: "questions.create" } } },
+                        [_vm._v("Ask Question")]
+                      )
+                    ],
+                    1
+                  )
+                ])
           ])
         ])
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -81225,6 +81241,130 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-53670989", module.exports)
   }
 }
+
+/***/ }),
+/* 257 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            posts: []
+        };
+    },
+    mounted: function mounted() {
+        this.fetchPosts();
+    },
+
+    methods: {
+        fetchPosts: function fetchPosts() {
+            var _this = this;
+
+            axios.get('/my-posts', { params: this.$route.query }).then(function (res) {
+                var data = res.data.data;
+
+                _this.posts = data;
+            }).catch(function (err) {
+                console.error(err.response.data);
+            });
+        }
+    },
+    watch: {
+        // Khi params trên URL thay đổi thì component KHÔNG có re-render lại -> watch nó để tự mình re-render nó
+        '$route': 'fetchPosts'
+    }
+});
 
 /***/ })
 /******/ ]);

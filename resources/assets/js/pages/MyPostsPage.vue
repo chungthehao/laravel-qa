@@ -6,64 +6,49 @@
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#">All</a>
+                                <router-link class="nav-link"
+                                             :to="{ name: 'my-posts' }"
+                                             exact>All</router-link>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Questions</a>
+                                <router-link class="nav-link"
+                                             :to="{ name: 'my-posts', query: { type: 'questions' } }"
+                                             exact>Questions</router-link>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Answers</a>
+                                <router-link class="nav-link"
+                                             :to="{ name: 'my-posts', query: { type: 'answers' } }"
+                                             exact>Answers</router-link>
                             </li>
-
                         </ul>
                     </div>
 
                     <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
+                        <ul class="list-group list-group-flush" v-if="posts.length">
+                            <li class="list-group-item" v-for="(post, idx) in posts" :key="post.id">
                                 <div class="row">
                                     <div class="col">
-                                        <span class="post-badge accepted">Q</span>
-                                        <span class="ml-4 votes-count accepted">10</span>
+                                        <span class="post-badge"
+                                              :class="{ accepted: post.accepted }">{{ post.type }}</span>
+                                        <span class="ml-4 votes-count"
+                                              :class="{ accepted: post.accepted }">{{ post.votes_count }}</span>
                                     </div>
 
-                                    <div class="col-md-9">
-                                        Lorem ipsum dolor sit amet
+                                    <div class="col-md-9 text-left">
+                                        {{ post.question_title }}
                                     </div>
 
-                                    <div class="col text-right">Jun 6'15</div>
+                                    <div class="col text-right">{{ post.created_at }}</div>
                                 </div>
                             </li>
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col">
-                                        <span class="post-badge accepted">A</span>
-                                        <span class="ml-4 votes-count accepted">36</span>
-                                    </div>
-
-                                    <div class="col-md-9">
-                                        Lorem ipsum dolor sit amet
-                                    </div>
-
-                                    <div class="col text-right">Mar 9'15</div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col">
-                                        <span class="post-badge accepted">Q</span>
-                                        <span class="ml-4 votes-count accepted">10</span>
-                                    </div>
-
-                                    <div class="col-md-9">
-                                        Lorem ipsum dolor sit amet
-                                    </div>
-
-                                    <div class="col text-right">Nov 7'20</div>
-                                </div>
-                            </li>
-
                         </ul>
+
+                        <div class="alert alert-warning" v-else>
+                            <p>You have no any questions or answers.</p>
+                            <p>
+                                <router-link :to="{ name: 'questions.create' }">Ask Question</router-link>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -100,3 +85,30 @@
         }
     }
 </style>
+
+<script>
+export default {
+    data() {
+        return {
+            posts: []
+        }
+    },
+    mounted() {
+        this.fetchPosts();
+    },
+    methods: {
+        fetchPosts() {
+            axios.get('/my-posts', { params: this.$route.query }).then(res => {
+                const { data } = res.data;
+                this.posts = data;
+            }).catch(err => {
+                console.error(err.response.data);
+            });
+        }
+    },
+    watch: {
+        // Khi params trên URL thay đổi thì component KHÔNG có re-render lại -> watch nó để tự mình re-render nó
+        '$route': 'fetchPosts'
+    }
+}
+</script>
