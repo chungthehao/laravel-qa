@@ -79,7 +79,7 @@ module.exports = __webpack_require__(250);
 
 var name = 'Hao';
 
-console.log('Hello ' + name + '... !!');
+//console.log(`Hello ${name}... !!`);
 
 /***/ })
 

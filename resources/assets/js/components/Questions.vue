@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="card-body">
-            <spinner v-if="loading" />
+            <spinner v-if="$root.loading" />
 
             <div v-else-if="questions.length">
                 <question-excerpt v-for="(question, idx) in questions"
@@ -33,7 +33,6 @@ export default {
             questions: [],
             links: {},
             meta: {},
-            loading: false
         }
     },
     mounted() {
@@ -44,16 +43,12 @@ export default {
     },
     methods: {
         fetchQuestions() {
-            this.loading = true;
-
             axios.get('/questions', { params: this.$route.query }).then(res => {
                 const { data, links, meta } = res.data;
                 this.questions = data;
                 this.links = links;
                 this.meta = meta;
-                this.loading = false;
             }).catch(err => {
-                this.loading = false;
                 console.log(err.response.data);
             });
         },

@@ -1,6 +1,6 @@
 <template>
     <div class="spinner">
-        <div class="fa fa-spinner fa-3x fa-spin"></div>
+        <i class="fa fa-spinner fa-3x fa-spin"></i>
     </div>
 </template>
 

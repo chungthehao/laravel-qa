@@ -16,6 +16,9 @@ class MyPostsController extends Controller
     public function __invoke(Request $request)
     {
         $posts = $request->user()->posts(); // có thể là answers or questions or both (current logged in user)
+
+        if (env('APP_ENV') === 'local') sleep(3);
+
         return response()->json(['data' => $posts]);
     }
 }

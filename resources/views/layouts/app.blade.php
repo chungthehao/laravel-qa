@@ -87,7 +87,7 @@
     // Luu them o localStorage
     localStorage.setItem('authInfo', JSON.stringify(authObj));
 
-    console.log(authObj);
+    //console.log(authObj);
 </script>
 
 <script src="{{ asset('js/app.js') }}"></script>
