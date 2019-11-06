@@ -8,7 +8,7 @@
         <!-- 1st column -->
 
         <div class="col text-center">
-            Page {{meta.current_page}} of {{meta.last_page}}
+            {{ pagesInfo }}
         </div>
         <!-- 2nd column -->
 
@@ -30,6 +30,12 @@ export default {
         },
         isLast() {
             return this.meta.current_page === this.meta.last_page
+        },
+        pagesInfo() {
+            let currentPage = this.meta.current_page || 1; // Khi thằng đằng trước undefined thì nó lấy tạm giá trị 1
+            let lastPage = this.meta.last_page || 1;
+
+            return `Page ${currentPage} of ${lastPage}`;
         }
     },
     methods: {

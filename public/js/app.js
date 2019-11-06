@@ -69498,6 +69498,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         isLast: function isLast() {
             return this.meta.current_page === this.meta.last_page;
+        },
+        pagesInfo: function pagesInfo() {
+            var currentPage = this.meta.current_page || 1; // Khi thằng đằng trước undefined thì nó lấy tạm giá trị 1
+            var lastPage = this.meta.last_page || 1;
+
+            return 'Page ' + currentPage + ' of ' + lastPage;
         }
     },
     methods: {
@@ -69540,13 +69546,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "col text-center" }, [
-      _vm._v(
-        "\n        Page " +
-          _vm._s(_vm.meta.current_page) +
-          " of " +
-          _vm._s(_vm.meta.last_page) +
-          "\n    "
-      )
+      _vm._v("\n        " + _vm._s(_vm.pagesInfo) + "\n    ")
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "col text-right" }, [

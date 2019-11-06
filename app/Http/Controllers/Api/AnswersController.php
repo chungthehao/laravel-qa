@@ -50,7 +50,7 @@ class AnswersController extends Controller
             ]
         );
 
-        if (env('APP_ENV') === 'local') sleep(2.5);
+        //if (env('APP_ENV') === 'local') sleep(2.5);
 
         return response()->json([
             'message' => 'Your answer has been submitted successfully!',
