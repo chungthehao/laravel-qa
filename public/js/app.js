@@ -69085,6 +69085,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__QuestionExcerpt_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__QuestionExcerpt_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Pagination_vue__ = __webpack_require__(124);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Pagination_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Pagination_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__event_bus__ = __webpack_require__(6);
 //
 //
 //
@@ -69108,7 +69109,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
+
 
 
 
@@ -69123,7 +69124,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     mounted: function mounted() {
+        var _this = this;
+
         this.fetchQuestions();
+
+        __WEBPACK_IMPORTED_MODULE_2__event_bus__["a" /* default */].$on('deleted', function (removedQuestionId) {
+            var idx = _this.questions.findIndex(function (q) {
+                return q.id === removedQuestionId;
+            });
+            _this.remove(idx);
+        });
     },
 
     watch: {
@@ -69131,7 +69141,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         fetchQuestions: function fetchQuestions() {
-            var _this = this;
+            var _this2 = this;
 
             axios.get('/questions', { params: this.$route.query }).then(function (res) {
                 var _res$data = res.data,
@@ -69139,9 +69149,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     links = _res$data.links,
                     meta = _res$data.meta;
 
-                _this.questions = data;
-                _this.links = links;
-                _this.meta = meta;
+                _this2.questions = data;
+                _this2.links = links;
+                _this2.meta = meta;
             }).catch(function (err) {
                 console.log(err.response.data);
             });
@@ -69207,6 +69217,7 @@ module.exports = Component.exports
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_destroy__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__event_bus__ = __webpack_require__(6);
 //
 //
 //
@@ -69250,6 +69261,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
@@ -69272,7 +69284,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 var message = res.data.message;
 
                 _this.$toast.success(message, 'Success');
-                _this.$emit('deleted');
+                __WEBPACK_IMPORTED_MODULE_1__event_bus__["a" /* default */].$emit('deleted', _this.question.id);
             }).catch(function (err) {
                 var data = err.response.data;
 
@@ -69593,12 +69605,7 @@ var render = function() {
                 _vm._l(_vm.questions, function(question, idx) {
                   return _c("question-excerpt", {
                     key: question.id,
-                    attrs: { question: question },
-                    on: {
-                      deleted: function($event) {
-                        return _vm.remove(idx)
-                      }
-                    }
+                    attrs: { question: question }
                   })
                 }),
                 1

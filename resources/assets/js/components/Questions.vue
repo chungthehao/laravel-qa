@@ -5,7 +5,6 @@
 
             <div v-else-if="questions.length">
                 <question-excerpt v-for="(question, idx) in questions"
-                                  @deleted="remove(idx)"
                                   :question="question"
                                   :key="question.id"></question-excerpt>
             </div>
@@ -25,6 +24,7 @@
 <script>
 import QuestionExcerpt from './QuestionExcerpt.vue';
 import Pagination from './Pagination.vue';
+import EventBus from '../event-bus';
 
 export default {
     components: { QuestionExcerpt, Pagination },
@@ -37,6 +37,11 @@ export default {
     },
     mounted() {
         this.fetchQuestions();
+
+        EventBus.$on('deleted', removedQuestionId => {
+            const idx = this.questions.findIndex(q => q.id === removedQuestionId);
+            this.remove(idx);
+        });
     },
     watch: {
         '$route': 'fetchQuestions'

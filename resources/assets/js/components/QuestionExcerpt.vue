@@ -43,6 +43,7 @@
 
 <script>
 import destroy from '../mixins/destroy';
+import EventBus from '../event-bus';
 
 export default {
     mixins: [destroy],
@@ -59,7 +60,7 @@ export default {
             axios.delete('/questions/' + this.question.id).then(res => {
                 const { message } = res.data;
                 this.$toast.success(message, 'Success');
-                this.$emit('deleted');
+                EventBus.$emit('deleted', this.question.id);
             }).catch(err => {
                 const { data } = err.response;
                 console.error(data);
