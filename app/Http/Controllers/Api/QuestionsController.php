@@ -20,6 +20,8 @@ class QuestionsController extends Controller
     {
         $questions = Question::with('user')->latest()->paginate(5);
 
+        if (env('APP_ENV') === 'local') sleep(3);
+
         return QuestionResource::collection($questions); // Laravel tự convert qua json rồi trả response về (tương tự cái dưới)
         // return response()->json($questions);
     }

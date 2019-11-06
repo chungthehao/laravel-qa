@@ -21910,6 +21910,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_izitoast_dist_css_iziToast_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_izitoast_dist_css_iziToast_min_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__authorization_authorize__ = __webpack_require__(112);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__router__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Spinner_vue__ = __webpack_require__(258);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Spinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_Spinner_vue__);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -21929,32 +21931,16 @@ window.Vue = __webpack_require__(8);
 
 
 
+
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_izitoast___default.a);
 Vue.use(__WEBPACK_IMPORTED_MODULE_2__authorization_authorize__["a" /* default */]);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-// Vue.component('example-component', require('./components/ExampleComponent.vue'));
-// Vue.component('user-info', require('./components/UserInfo.vue')); // Dùng trong Question.vue, Answer.vue component
-// Vue.component('answer', require('./components/Answer.vue')); Chỉ dùng trong Answers.vue component
-// Vue.component('favorite', require('./components/Favorite.vue')); // Chỉ dùng trong Vote.vue, ko cần lấy ở đây
-// Vue.component('accept', require('./components/Accept.vue')); // Chỉ dùng trong Vote.vue, ko cần lấy ở đây
-// Vue.component('vote', require('./components/Vote.vue')); // Dùng trong Question.vue, Answer.vue component
-// Vue.component('answers', require('./components/Answers.vue')); // Dùng trong QuestionPage.vue
-// Vue.component('question', require('./components/Question.vue')); // Dùng trong QuestionPage.vue
-Vue.component('question-page', __webpack_require__(77));
+Vue.component('spinner', __WEBPACK_IMPORTED_MODULE_4__components_Spinner_vue___default.a);
 
 var app = new Vue({
   el: '#app',
   router: __WEBPACK_IMPORTED_MODULE_3__router__["a" /* default */]
 });
-
-// const name = 'The Hao';
-// console.log(`Hi ${name}`);
 
 /***/ }),
 /* 82 */
@@ -44429,7 +44415,7 @@ __WEBPACK_IMPORTED_MODULE_0__fortawesome_fontawesome_svg_core__["a" /* config */
 
 
 // Add custom icons to fontawesome library
-__WEBPACK_IMPORTED_MODULE_0__fortawesome_fontawesome_svg_core__["c" /* library */].add(__WEBPACK_IMPORTED_MODULE_1__fortawesome_free_solid_svg_icons__["e" /* fas */], __WEBPACK_IMPORTED_MODULE_1__fortawesome_free_solid_svg_icons__["b" /* faCaretUp */], __WEBPACK_IMPORTED_MODULE_1__fortawesome_free_solid_svg_icons__["a" /* faCaretDown */], __WEBPACK_IMPORTED_MODULE_1__fortawesome_free_solid_svg_icons__["d" /* faStar */], __WEBPACK_IMPORTED_MODULE_1__fortawesome_free_solid_svg_icons__["c" /* faCheck */]);
+__WEBPACK_IMPORTED_MODULE_0__fortawesome_fontawesome_svg_core__["c" /* library */].add(__WEBPACK_IMPORTED_MODULE_1__fortawesome_free_solid_svg_icons__["f" /* fas */], __WEBPACK_IMPORTED_MODULE_1__fortawesome_free_solid_svg_icons__["b" /* faCaretUp */], __WEBPACK_IMPORTED_MODULE_1__fortawesome_free_solid_svg_icons__["a" /* faCaretDown */], __WEBPACK_IMPORTED_MODULE_1__fortawesome_free_solid_svg_icons__["e" /* faStar */], __WEBPACK_IMPORTED_MODULE_1__fortawesome_free_solid_svg_icons__["c" /* faCheck */], __WEBPACK_IMPORTED_MODULE_1__fortawesome_free_solid_svg_icons__["d" /* faSpinner */]);
 
 // Kicks off the process of finding <i> tags and replacing with <svg>
 __WEBPACK_IMPORTED_MODULE_0__fortawesome_fontawesome_svg_core__["b" /* dom */].watch();
@@ -47058,7 +47044,7 @@ var autoReplace = function autoReplace() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return _iconsCache; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return _iconsCache; });
 /* unused harmony export prefix */
 /* unused harmony export faAd */
 /* unused harmony export faAddressBook */
@@ -47835,14 +47821,14 @@ var autoReplace = function autoReplace() {
 /* unused harmony export faSpaceShuttle */
 /* unused harmony export faSpellCheck */
 /* unused harmony export faSpider */
-/* unused harmony export faSpinner */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return faSpinner; });
 /* unused harmony export faSplotch */
 /* unused harmony export faSprayCan */
 /* unused harmony export faSquare */
 /* unused harmony export faSquareFull */
 /* unused harmony export faSquareRootAlt */
 /* unused harmony export faStamp */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return faStar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return faStar; });
 /* unused harmony export faStarAndCrescent */
 /* unused harmony export faStarHalf */
 /* unused harmony export faStarHalfAlt */
@@ -69099,7 +69085,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             questions: [],
             links: {},
-            meta: {}
+            meta: {},
+            loading: false
         };
     },
     mounted: function mounted() {
@@ -69113,6 +69100,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         fetchQuestions: function fetchQuestions() {
             var _this = this;
 
+            this.loading = true;
+
             axios.get('/questions', { params: this.$route.query }).then(function (res) {
                 var _res$data = res.data,
                     data = _res$data.data,
@@ -69122,8 +69111,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.questions = data;
                 _this.links = links;
                 _this.meta = meta;
+                _this.loading = false;
             }).catch(function (err) {
-                return console.log(err.response.data);
+                _this.loading = false;
+                console.log(err.response.data);
             });
         },
         remove: function remove(idx) {
@@ -69561,28 +69552,35 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "card-body" }, [
-      _vm.questions.length
-        ? _c(
-            "div",
-            _vm._l(_vm.questions, function(question, idx) {
-              return _c("question-excerpt", {
-                key: question.id,
-                attrs: { question: question },
-                on: {
-                  deleted: function($event) {
-                    return _vm.remove(idx)
-                  }
-                }
-              })
-            }),
-            1
-          )
-        : _c("div", { staticClass: "alert alert-warning text-center" }, [
-            _c("strong", [_vm._v("Sorry!")]),
-            _vm._v(" There are no questions available.\n        ")
-          ])
-    ]),
+    _c(
+      "div",
+      { staticClass: "card-body" },
+      [
+        _vm.loading
+          ? _c("spinner")
+          : _vm.questions.length
+            ? _c(
+                "div",
+                _vm._l(_vm.questions, function(question, idx) {
+                  return _c("question-excerpt", {
+                    key: question.id,
+                    attrs: { question: question },
+                    on: {
+                      deleted: function($event) {
+                        return _vm.remove(idx)
+                      }
+                    }
+                  })
+                }),
+                1
+              )
+            : _c("div", { staticClass: "alert alert-warning text-center" }, [
+                _c("strong", [_vm._v("Sorry!")]),
+                _vm._v(" There are no questions available.\n        ")
+              ])
+      ],
+      1
+    ),
     _vm._v(" "),
     _c(
       "div",
@@ -81365,6 +81363,127 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         '$route': 'fetchPosts'
     }
 });
+
+/***/ }),
+/* 258 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(260)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = null
+/* template */
+var __vue_template__ = __webpack_require__(262)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-36a7cc9c"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Spinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-36a7cc9c", Component.options)
+  } else {
+    hotAPI.reload("data-v-36a7cc9c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 259 */,
+/* 260 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(261);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(254)("2eedc3b3", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-36a7cc9c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Spinner.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-36a7cc9c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Spinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 261 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.spinner[data-v-36a7cc9c] {\r\n    color: #ddd;\r\n    text-align: center;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 262 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "spinner" }, [
+      _c("div", { staticClass: "fa fa-spinner fa-3x fa-spin" })
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-36a7cc9c", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

@@ -16,30 +16,16 @@ import VueIziToast from 'vue-izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import Authorization from './authorization/authorize';
 import router from './router';
+import Spinner from './components/Spinner.vue';
 
 Vue.use(VueIziToast);
 Vue.use(Authorization);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue'));
-// Vue.component('user-info', require('./components/UserInfo.vue')); // Dùng trong Question.vue, Answer.vue component
-// Vue.component('answer', require('./components/Answer.vue')); Chỉ dùng trong Answers.vue component
-// Vue.component('favorite', require('./components/Favorite.vue')); // Chỉ dùng trong Vote.vue, ko cần lấy ở đây
-// Vue.component('accept', require('./components/Accept.vue')); // Chỉ dùng trong Vote.vue, ko cần lấy ở đây
-// Vue.component('vote', require('./components/Vote.vue')); // Dùng trong Question.vue, Answer.vue component
-// Vue.component('answers', require('./components/Answers.vue')); // Dùng trong QuestionPage.vue
-// Vue.component('question', require('./components/Question.vue')); // Dùng trong QuestionPage.vue
-Vue.component('question-page', require('./pages/QuestionPage.vue'));
+Vue.component('spinner', Spinner);
+
 
 const app = new Vue({
     el: '#app',
     router
 });
-
-// const name = 'The Hao';
-// console.log(`Hi ${name}`);

@@ -1,9 +1,9 @@
 <template>
     <div>
         <div class="card-body">
-            <!--@include('layouts._messages')-->
+            <spinner v-if="loading" />
 
-            <div v-if="questions.length">
+            <div v-else-if="questions.length">
                 <question-excerpt v-for="(question, idx) in questions"
                                   @deleted="remove(idx)"
                                   :question="question"
@@ -32,7 +32,8 @@ export default {
         return {
             questions: [],
             links: {},
-            meta: {}
+            meta: {},
+            loading: false
         }
     },
     mounted() {
@@ -43,12 +44,18 @@ export default {
     },
     methods: {
         fetchQuestions() {
+            this.loading = true;
+
             axios.get('/questions', { params: this.$route.query }).then(res => {
                 const { data, links, meta } = res.data;
                 this.questions = data;
                 this.links = links;
                 this.meta = meta;
-            }).catch(err => console.log(err.response.data));
+                this.loading = false;
+            }).catch(err => {
+                this.loading = false;
+                console.log(err.response.data);
+            });
         },
         remove(idx) {
             this.questions.splice(idx, 1);
