@@ -17,7 +17,7 @@ class MyPostsController extends Controller
     {
         $posts = $request->user()->posts(); // có thể là answers or questions or both (current logged in user)
 
-        if (env('APP_ENV') === 'local') sleep(3);
+        if (env('APP_ENV') === 'local') sleep(1);
 
         return response()->json(['data' => $posts]);
     }

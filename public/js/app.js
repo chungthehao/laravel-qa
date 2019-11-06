@@ -68928,7 +68928,7 @@ var routes = [{
     component: __WEBPACK_IMPORTED_MODULE_2__pages_EditQuestionPage___default.a, // ~ blade view in Laravel
     name: 'questions.edit' // ~ route's name in Laravel
 }, {
-    path: '/my-posts',
+    path: '/home',
     component: __WEBPACK_IMPORTED_MODULE_4__pages_MyPostsPage___default.a, // ~ blade view in Laravel
     name: 'my-posts', // ~ route's name in Laravel
     meta: {

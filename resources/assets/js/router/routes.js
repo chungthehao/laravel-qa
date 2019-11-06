@@ -27,7 +27,7 @@ const routes = [
         name: 'questions.edit' // ~ route's name in Laravel
     },
     {
-        path: '/my-posts',
+        path: '/home',
         component: MyPostsPage, // ~ blade view in Laravel
         name: 'my-posts', // ~ route's name in Laravel
         meta: {
