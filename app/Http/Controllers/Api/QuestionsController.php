@@ -36,6 +36,8 @@ class QuestionsController extends Controller
     {
         $question = $request->user()->questions()->create($request->only('title', 'body'));
 
+        if (env('APP_ENV') === 'local') sleep(3);
+
         return response()->json([
             'message' => 'Your question has been submitted.',
             'question' => new QuestionResource($question)

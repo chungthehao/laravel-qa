@@ -16,7 +16,10 @@
                             </m-editor>
                         </div>
                         <div class="form-group text-right">
-                            <button v-bind:disabled="isInvalid" type="submit" class="btn btn-lg btn-outline-primary">Submit</button>
+                            <button v-bind:disabled="isInvalid" type="submit" class="btn btn-lg btn-outline-primary">
+                                <spinner :small="true" v-if="$root.loading" :min-width="57" />
+                                <span v-else>Submit</span>
+                            </button>
                         </div>
                     </form>
                 </div>

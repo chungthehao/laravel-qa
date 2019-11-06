@@ -1,6 +1,6 @@
 <template>
-    <div class="spinner">
-        <i class="fa fa-spinner fa-3x fa-spin"></i>
+    <div class="spinner" :style="styleObj">
+        <i class="fa fa-spinner fa-spin" :class="sizeClass"></i>
     </div>
 </template>
 
@@ -10,3 +10,28 @@
     text-align: center;
 }
 </style>
+
+<script>
+export default {
+    props: {
+        small: {
+            type: Boolean,
+            default: false
+        },
+        minWidth: {
+            type: Number,
+            default: 100
+        }
+    },
+    computed: {
+        sizeClass() {
+            return this.small ? 'fa-1x' : 'fa-3x';
+        },
+        styleObj() {
+            return {
+                minWidth: this.minWidth + 'px'
+            }
+        }
+    }
+}
+</script>

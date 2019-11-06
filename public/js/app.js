@@ -69839,7 +69839,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -78432,7 +78431,12 @@ var render = function() {
             staticClass: "btn btn-outline-primary btn-lg btn-block",
             attrs: { type: "submit" }
           },
-          [_vm._v(_vm._s(_vm.submitButtonText))]
+          [
+            _vm.$root.loading
+              ? _c("spinner", { attrs: { small: true } })
+              : _c("span", [_vm._v(_vm._s(_vm.submitButtonText))])
+          ],
+          1
         )
       ])
     ]
@@ -80416,6 +80420,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -80526,7 +80533,14 @@ var render = function() {
                     staticClass: "btn btn-lg btn-outline-primary",
                     attrs: { disabled: _vm.isInvalid, type: "submit" }
                   },
-                  [_vm._v("Submit")]
+                  [
+                    _vm.$root.loading
+                      ? _c("spinner", {
+                          attrs: { small: true, "min-width": 57 }
+                        })
+                      : _c("span", [_vm._v("Submit")])
+                  ],
+                  1
                 )
               ])
             ]
@@ -81415,7 +81429,7 @@ function injectStyle (ssrContext) {
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(263)
 /* template */
 var __vue_template__ = __webpack_require__(262)
 /* template functional */
@@ -81504,18 +81518,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "spinner", style: _vm.styleObj }, [
+    _c("i", { staticClass: "fa fa-spinner fa-spin", class: _vm.sizeClass })
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "spinner" }, [
-      _c("i", { staticClass: "fa fa-spinner fa-3x fa-spin" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -81524,6 +81531,49 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-36a7cc9c", module.exports)
   }
 }
+
+/***/ }),
+/* 263 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        small: {
+            type: Boolean,
+            default: false
+        },
+        minWidth: {
+            type: Number,
+            default: 100
+        }
+    },
+    computed: {
+        sizeClass: function sizeClass() {
+            return this.small ? 'fa-1x' : 'fa-3x';
+        },
+        styleObj: function styleObj() {
+            return {
+                minWidth: this.minWidth + 'px'
+            };
+        }
+    }
+});
 
 /***/ })
 /******/ ]);

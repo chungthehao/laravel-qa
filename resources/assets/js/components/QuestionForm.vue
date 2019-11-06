@@ -1,9 +1,5 @@
 <template>
-    <!--<form action="{{ route('questions.store') }}" method="post">-->
     <form @submit.prevent="handleSubmit">
-        <!--@csrf-->
-        <!--@include('questions._form', ['submitButtonText' => 'Ask This Question'])-->
-
         <div class="form-group">
             <label for="question-title">Question Title</label>
             <input type="text" v-model="title"
@@ -27,7 +23,10 @@
             </m-editor>
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-outline-primary btn-lg btn-block">{{ submitButtonText }}</button>
+            <button type="submit" class="btn btn-outline-primary btn-lg btn-block">
+                <spinner v-if="$root.loading" :small="true" />
+                <span v-else>{{ submitButtonText }}</span>
+            </button>
         </div>
     </form>
 </template>
