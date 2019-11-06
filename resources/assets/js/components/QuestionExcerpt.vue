@@ -57,10 +57,17 @@ export default {
 
         // Re-define (override) the delete method
         delete() {
+            // Việc xóa question này ko muốn có axios interceptor -> loading = true -> bật/tắt Questions.vue component
+            // => reload lại toàn bộ component Questions
+            // => Tạm thời tắt nó đi đã (lát xong bật lại)
+            this.$root.disableInterceptor();
+
             axios.delete('/questions/' + this.question.id).then(res => {
                 const { message } = res.data;
                 this.$toast.success(message, 'Success');
                 EventBus.$emit('deleted', this.question.id);
+
+                this.$root.enableInterceptor(); // Bật lại axios interceptor
             }).catch(err => {
                 const { data } = err.response;
                 console.error(data);

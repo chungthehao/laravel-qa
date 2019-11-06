@@ -21940,38 +21940,47 @@ Vue.component('spinner', __WEBPACK_IMPORTED_MODULE_4__components_Spinner_vue___d
 var app = new Vue({
     el: '#app',
 
-    data: { loading: false },
+    data: { loading: false, interceptor: null },
 
     created: function created() {
-        var _this = this;
-
-        // Add a request interceptor
-        axios.interceptors.request.use(function (config) {
-            // Do something before request is sent
-            console.log('Request intercepted');
-            _this.loading = true;
-            return config;
-        }, function (error) {
-            // Do something with request error
-            _this.loading = false;
-            return Promise.reject(error);
-        });
-
-        // Add a response interceptor
-        axios.interceptors.response.use(function (response) {
-            // Any status code that lie within the range of 2xx cause this function to trigger
-            // Do something with response data
-            console.log('Response intercepted');
-            _this.loading = false;
-            return response;
-        }, function (error) {
-            // Any status codes that falls outside the range of 2xx cause this function to trigger
-            // Do something with response error
-            _this.loading = false;
-            return Promise.reject(error);
-        });
+        this.enableInterceptor();
     },
 
+
+    methods: {
+        enableInterceptor: function enableInterceptor() {
+            var _this = this;
+
+            // Add a request interceptor
+            this.interceptor = axios.interceptors.request.use(function (config) {
+                // Do something before request is sent
+                console.log('Request intercepted');
+                _this.loading = true;
+                return config;
+            }, function (error) {
+                // Do something with request error
+                _this.loading = false;
+                return Promise.reject(error);
+            });
+
+            // Add a response interceptor
+            axios.interceptors.response.use(function (response) {
+                // Any status code that lie within the range of 2xx cause this function to trigger
+                // Do something with response data
+                console.log('Response intercepted');
+                _this.loading = false;
+                return response;
+            }, function (error) {
+                // Any status codes that falls outside the range of 2xx cause this function to trigger
+                // Do something with response error
+                _this.loading = false;
+                return Promise.reject(error);
+            });
+        },
+        disableInterceptor: function disableInterceptor() {
+            axios.interceptors.request.eject(this.interceptor);
+        }
+    },
 
     router: __WEBPACK_IMPORTED_MODULE_3__router__["a" /* default */]
 });
@@ -69280,11 +69289,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         delete: function _delete() {
             var _this = this;
 
+            // Việc xóa question này ko muốn có axios interceptor -> loading = true -> bật/tắt Questions.vue component
+            // => reload lại toàn bộ component Questions
+            // => Tạm thời tắt nó đi đã (lát xong bật lại)
+            this.$root.disableInterceptor();
+
             axios.delete('/questions/' + this.question.id).then(function (res) {
                 var message = res.data.message;
 
                 _this.$toast.success(message, 'Success');
                 __WEBPACK_IMPORTED_MODULE_1__event_bus__["a" /* default */].$emit('deleted', _this.question.id);
+
+                _this.$root.enableInterceptor(); // Bật lại axios interceptor
             }).catch(function (err) {
                 var data = err.response.data;
 
